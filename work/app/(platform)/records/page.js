@@ -1,11 +1,11 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useEffect, useMemo, useState, Suspense } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import {
   Search,
   SlidersHorizontal,
-  MapPin,
+  FileText,
   ChevronRight,
   X,
   AlertTriangle,
@@ -13,20 +13,34 @@ import {
   Clock3,
   ShieldCheck,
   RefreshCw,
+  FolderOpen,
 } from "lucide-react";
 
+import { getDocuments } from "@/services/api/documents";
 import { getParcels } from "@/services/api/parcels";
-
 import styles from "./records.module.css";
 
-export default function RecordsPage() {
-  const router = useRouter();
+// Generate evidence records from parcel intelligence data
+function buildEvidenceRecords(parcelsList, documents) {
+  return documents.map(doc => {
+    const p = parcelsList.find(p => p.id === doc.parcelId) || {};
+    return {id:doc.id, type:doc.documentType, parcelId:doc.parcelId, surveyNumber:p.surveyNumber || "",
+      sourceDept:"Local document upload", documentRef:doc.fileName || doc.id, owner:p.currentRecordedOwner || "",
+      area:p.recordedArea == null ? "—" : `${p.recordedArea} ha`, date:doc.uploadedAt,
+      status:doc.ocrStatus === "COMPLETED" ? p.recordStatus : doc.ocrStatus};
+  });
+}
 
+function RecordsContent() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const initialFilter = searchParams.get("type");
+
+  const [documents, setDocuments] = useState([]);
   const [parcels, setParcels] = useState([]);
   const [search, setSearch] = useState("");
-  const [riskFilter, setRiskFilter] = useState("ALL");
+  const [typeFilter, setTypeFilter] = useState(initialFilter || "ALL");
   const [statusFilter, setStatusFilter] = useState("ALL");
-  const [villageFilter, setVillageFilter] = useState("ALL");
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -36,81 +50,49 @@ export default function RecordsPage() {
       try {
         setLoading(true);
         setError("");
-
-        const data = await getParcels();
-        setParcels(data);
+        const [data, docs] = await Promise.all([getParcels(), getDocuments()]);
+        setParcels(data); setDocuments(docs);
       } catch (err) {
-        setError(
-          err.message || "Unable to load land records."
-        );
+        setError(err.message || "Unable to load record registry.");
       } finally {
         setLoading(false);
       }
     }
-
     loadParcels();
   }, []);
 
-  const villages = useMemo(() => {
-    const uniqueVillages = parcels
-      .map((parcel) => parcel.village?.name)
-      .filter(Boolean);
+  const allRecords = useMemo(() => buildEvidenceRecords(parcels, documents), [parcels, documents]);
 
-    return [...new Set(uniqueVillages)];
-  }, [parcels]);
+  const recordTypes = useMemo(() => {
+    return [...new Set(allRecords.map((r) => r.type))];
+  }, [allRecords]);
 
-  const filteredParcels = useMemo(() => {
+  const filteredRecords = useMemo(() => {
     const term = search.trim().toLowerCase();
 
-    return parcels.filter((parcel) => {
+    return allRecords.filter((record) => {
       const matchesSearch =
         !term ||
-        parcel.id?.toLowerCase().includes(term) ||
-        parcel.surveyNumber
-          ?.toLowerCase()
-          .includes(term) ||
-        parcel.khataNumber
-          ?.toLowerCase()
-          .includes(term) ||
-        parcel.currentRecordedOwner
-          ?.toLowerCase()
-          .includes(term);
+        record.id.toLowerCase().includes(term) ||
+        record.parcelId.toLowerCase().includes(term) ||
+        record.surveyNumber.toLowerCase().includes(term) ||
+        record.owner.toLowerCase().includes(term) ||
+        record.documentRef.toLowerCase().includes(term);
 
-      const matchesRisk =
-        riskFilter === "ALL" ||
-        parcel.riskLevel === riskFilter;
+      const matchesType = typeFilter === "ALL" || record.type === typeFilter;
+      const matchesStatus = statusFilter === "ALL" || record.status === statusFilter;
 
-      const matchesStatus =
-        statusFilter === "ALL" ||
-        parcel.status === statusFilter;
-
-      const matchesVillage =
-        villageFilter === "ALL" ||
-        parcel.village?.name === villageFilter;
-
-      return (
-        matchesSearch &&
-        matchesRisk &&
-        matchesStatus &&
-        matchesVillage
-      );
+      return matchesSearch && matchesType && matchesStatus;
     });
-  }, [
-    parcels,
-    search,
-    riskFilter,
-    statusFilter,
-    villageFilter,
-  ]);
+  }, [allRecords, search, typeFilter, statusFilter]);
 
   function clearFilters() {
     setSearch("");
-    setRiskFilter("ALL");
+    setTypeFilter("ALL");
     setStatusFilter("ALL");
-    setVillageFilter("ALL");
   }
 
-  function openParcel(parcelId) {
+  function openRecordDetail(parcelId) {
     router.push(`/records/${parcelId}`);
   }
 
@@ -119,22 +101,17 @@ export default function RecordsPage() {
       {/* Header */}
       <div className={styles.pageHeader}>
         <div>
-          <div className={styles.eyebrow}>
-            LAND RECORD MANAGEMENT
-          </div>
-
-          <h1>Land Records</h1>
-
+          <div className={styles.eyebrow}>EVIDENCE & RECORD REGISTRY</div>
+          <h1>Evidence Records</h1>
           <p>
-            Search, review and investigate digitized land
-            records across available sources.
+            Master index of source evidence documents, revenue register entries, registration deeds, and GIS surveys.
           </p>
         </div>
 
         <div className={styles.headerMeta}>
           <div className={styles.recordCount}>
-            <span>Total Records</span>
-            <strong>{parcels.length}</strong>
+            <span>Indexed Records</span>
+            <strong>{allRecords.length}</strong>
           </div>
         </div>
       </div>
@@ -143,16 +120,12 @@ export default function RecordsPage() {
       <div className={styles.filterCard}>
         <div className={styles.searchBox}>
           <Search size={17} />
-
           <input
             type="text"
             value={search}
-            onChange={(event) =>
-              setSearch(event.target.value)
-            }
-            placeholder="Search survey number, khata, owner or parcel ID..."
+            onChange={(e) => setSearch(e.target.value)}
+            placeholder="Search Record ID, Document Ref, Parcel, Owner or Survey #..."
           />
-
           {search && (
             <button
               type="button"
@@ -168,21 +141,14 @@ export default function RecordsPage() {
         <div className={styles.filters}>
           <div className={styles.filterItem}>
             <SlidersHorizontal size={14} />
-
             <select
-              value={villageFilter}
-              onChange={(event) =>
-                setVillageFilter(event.target.value)
-              }
+              value={typeFilter}
+              onChange={(e) => setTypeFilter(e.target.value)}
             >
-              <option value="ALL">All Villages</option>
-
-              {villages.map((village) => (
-                <option
-                  key={village}
-                  value={village}
-                >
-                  {village}
+              <option value="ALL">All Record Types</option>
+              {recordTypes.map((t) => (
+                <option key={t} value={t}>
+                  {t}
                 </option>
               ))}
             </select>
@@ -190,43 +156,16 @@ export default function RecordsPage() {
 
           <div className={styles.filterItem}>
             <select
-              value={riskFilter}
-              onChange={(event) =>
-                setRiskFilter(event.target.value)
-              }
-            >
-              <option value="ALL">All Risk Levels</option>
-              <option value="LOW">Low Risk</option>
-              <option value="MEDIUM">Medium Risk</option>
-              <option value="HIGH">High Risk</option>
-              <option value="CRITICAL">
-                Critical Risk
-              </option>
-            </select>
-          </div>
-
-          <div className={styles.filterItem}>
-            <select
               value={statusFilter}
-              onChange={(event) =>
-                setStatusFilter(event.target.value)
-              }
+              onChange={(e) => setStatusFilter(e.target.value)}
             >
               <option value="ALL">All Statuses</option>
               <option value="VERIFIED">Verified</option>
-              <option value="REVIEW_REQUIRED">
-                Review Required
-              </option>
-              <option value="PROCESSING">
-                Processing
-              </option>
+              <option value="REVIEW_REQUIRED">Review Required</option>
             </select>
           </div>
 
-          {(search ||
-            riskFilter !== "ALL" ||
-            statusFilter !== "ALL" ||
-            villageFilter !== "ALL") && (
+          {(search || typeFilter !== "ALL" || statusFilter !== "ALL") && (
             <button
               type="button"
               className={styles.clearFilters}
@@ -241,26 +180,20 @@ export default function RecordsPage() {
       {/* Results summary */}
       <div className={styles.resultsBar}>
         <div>
-          Showing{" "}
-          <strong>{filteredParcels.length}</strong>{" "}
-          of {parcels.length} records
+          Showing <strong>{filteredRecords.length}</strong> of {allRecords.length} evidence records
         </div>
 
         <div className={styles.resultsHint}>
           <ShieldCheck size={14} />
-          Evidence-linked records
+          Cryptographically hashed evidence index
         </div>
       </div>
 
       {/* Loading */}
       {loading && (
         <div className={styles.stateCard}>
-          <RefreshCw
-            size={20}
-            className={styles.spinner}
-          />
-
-          <span>Loading land records...</span>
+          <RefreshCw size={20} className={styles.spinner} />
+          <span>Loading record registry...</span>
         </div>
       )}
 
@@ -268,215 +201,126 @@ export default function RecordsPage() {
       {!loading && error && (
         <div className={styles.errorCard}>
           <AlertTriangle size={20} />
-
           <div>
-            <strong>Unable to load records</strong>
+            <strong>Unable to load record registry</strong>
             <p>{error}</p>
           </div>
         </div>
       )}
 
       {/* Empty */}
-      {!loading &&
-        !error &&
-        filteredParcels.length === 0 && (
-          <div className={styles.emptyCard}>
-            <Search size={24} />
-
-            <h3>No records found</h3>
-
-            <p>
-              Try changing your search term or clearing
-              the active filters.
-            </p>
-
-            <button
-              type="button"
-              onClick={clearFilters}
-            >
-              Clear filters
-            </button>
-          </div>
-        )}
-
-      {/* Desktop table */}
-      {!loading &&
-        !error &&
-        filteredParcels.length > 0 && (
-          <div className={styles.tableCard}>
-            <div className={styles.tableWrapper}>
-              <table>
-                <thead>
-                  <tr>
-                    <th>Parcel</th>
-                    <th>Location</th>
-                    <th>Recorded Owner</th>
-                    <th>Area</th>
-                    <th>Record Health</th>
-                    <th>Risk</th>
-                    <th>Status</th>
-                    <th></th>
-                  </tr>
-                </thead>
-
-                <tbody>
-                  {filteredParcels.map((parcel) => (
-                    <tr
-                      key={parcel.id}
-                      onClick={() =>
-                        openParcel(parcel.id)
-                      }
-                    >
-                      {/* Parcel */}
-                      <td>
-                        <div className={styles.parcelCell}>
-                          <strong>{parcel.id}</strong>
-
-                          <span>
-                            Survey {parcel.surveyNumber}
-                          </span>
-                        </div>
-                      </td>
-
-                      {/* Location */}
-                      <td>
-                        <div className={styles.locationCell}>
-                          <MapPin size={14} />
-
-                          <div>
-                            <strong>
-                              {parcel.village?.name ||
-                                "Unknown"}
-                            </strong>
-
-                            <span>
-                              {parcel.village?.district ||
-                                "—"}
-                            </span>
-                          </div>
-                        </div>
-                      </td>
-
-                      {/* Owner */}
-                      <td>
-                        <div className={styles.ownerCell}>
-                          {parcel.currentRecordedOwner}
-                        </div>
-                      </td>
-
-                      {/* Area */}
-                      <td>
-                        <div className={styles.areaCell}>
-                          <strong>
-                            {Number(
-                              parcel.recordedArea
-                            ).toFixed(2)}
-                          </strong>
-
-                          <span>ha</span>
-                        </div>
-                      </td>
-
-                      {/* Health */}
-                      <td>
-                        <HealthIndicator
-                          value={parcel.healthScore}
-                        />
-                      </td>
-
-                      {/* Risk */}
-                      <td>
-                        <RiskBadge
-                          level={parcel.riskLevel}
-                        />
-                      </td>
-
-                      {/* Status */}
-                      <td>
-                        <StatusBadge
-                          status={parcel.status}
-                        />
-                      </td>
-
-                      {/* Action */}
-                      <td>
-                        <button
-                          type="button"
-                          className={styles.viewButton}
-                          onClick={(event) => {
-                            event.stopPropagation();
-                            openParcel(parcel.id);
-                          }}
-                          aria-label={`Open ${parcel.id}`}
-                        >
-                          <ChevronRight size={17} />
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        )}
-    </div>
-  );
-}
-
-/* ---------------------------------------
-   Health Indicator
---------------------------------------- */
-
-function HealthIndicator({ value }) {
-  const score = Number(value) || 0;
-
-  return (
-    <div className={styles.health}>
-      <div className={styles.healthTop}>
-        <span>{score}</span>
-        <small>/ 100</small>
-      </div>
-
-      <div className={styles.healthBar}>
-        <div
-          className={styles.healthFill}
-          style={{ width: `${score}%` }}
-        />
-      </div>
-    </div>
-  );
-}
-
-/* ---------------------------------------
-   Risk Badge
---------------------------------------- */
-
-function RiskBadge({ level }) {
-  const normalized = level || "UNKNOWN";
-
-  return (
-    <span
-      className={`${styles.riskBadge} ${
-        styles[`risk${normalized}`] || ""
-      }`}
-    >
-      {normalized === "HIGH" ||
-      normalized === "CRITICAL" ? (
-        <AlertTriangle size={12} />
-      ) : normalized === "LOW" ? (
-        <CheckCircle2 size={12} />
-      ) : (
-        <Clock3 size={12} />
+      {!loading && !error && filteredRecords.length === 0 && (
+        <div className={styles.emptyCard}>
+          <FolderOpen size={24} />
+          <h3>No evidence records found</h3>
+          <p>Try changing your search term or clearing the active filters.</p>
+          <button type="button" onClick={clearFilters}>
+            Clear filters
+          </button>
+        </div>
       )}
 
-      {normalized}
-    </span>
+      {/* Desktop table */}
+      {!loading && !error && filteredRecords.length > 0 && (
+        <div className={styles.tableCard}>
+          <div className={styles.tableWrapper}>
+            <table>
+              <thead>
+                <tr>
+                  <th>Record ID</th>
+                  <th>Record Type</th>
+                  <th>Target Parcel</th>
+                  <th>Source Dept</th>
+                  <th>Doc Reference</th>
+                  <th>Recorded Owner</th>
+                  <th>Date</th>
+                  <th>Status</th>
+                  <th></th>
+                </tr>
+              </thead>
+
+              <tbody>
+                {filteredRecords.map((rec) => (
+                  <tr
+                    key={rec.id}
+                    onClick={() => openRecordDetail(rec.parcelId)}
+                  >
+                    {/* Record ID */}
+                    <td>
+                      <div className={styles.parcelCell}>
+                        <strong>{rec.id}</strong>
+                      </div>
+                    </td>
+
+                    {/* Type */}
+                    <td>
+                      <div className={styles.typeCell}>
+                        <FileText size={14} />
+                        <span>{rec.type}</span>
+                      </div>
+                    </td>
+
+                    {/* Target Parcel */}
+                    <td>
+                      <div className={styles.locationCell}>
+                        <strong>{rec.parcelId}</strong>
+                        <span>Survey {rec.surveyNumber}</span>
+                      </div>
+                    </td>
+
+                    {/* Source Dept */}
+                    <td>{rec.sourceDept}</td>
+
+                    {/* Doc Reference */}
+                    <td>
+                      <code className={styles.docCode}>{rec.documentRef}</code>
+                    </td>
+
+                    {/* Owner */}
+                    <td>
+                      <div className={styles.ownerCell}>{rec.owner}</div>
+                    </td>
+
+                    {/* Date */}
+                    <td>{rec.date}</td>
+
+                    {/* Status */}
+                    <td>
+                      <StatusBadge status={rec.status} />
+                    </td>
+
+                    {/* Action */}
+                    <td>
+                      <button
+                        type="button"
+                        className={styles.viewButton}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          openRecordDetail(rec.parcelId);
+                        }}
+                        aria-label={`Open ${rec.parcelId}`}
+                      >
+                        <ChevronRight size={17} />
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
+    </div>
   );
 }
 
-/* ---------------------------------------
-   Status Badge
---------------------------------------- */
+export default function RecordsPage() {
+  return (
+    <Suspense fallback={<div>Loading record registry...</div>}>
+      <RecordsContent />
+    </Suspense>
+  );
+}
 
 function StatusBadge({ status }) {
   const labels = {
@@ -491,6 +335,11 @@ function StatusBadge({ status }) {
         styles[`status${status}`] || ""
       }`}
     >
+      {status === "VERIFIED" ? (
+        <CheckCircle2 size={12} />
+      ) : (
+        <AlertTriangle size={12} />
+      )}
       {labels[status] || status}
     </span>
   );

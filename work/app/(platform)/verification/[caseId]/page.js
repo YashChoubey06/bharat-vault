@@ -27,6 +27,8 @@ import {
 import { getParcelById } from "@/services/api/parcels";
 import { getEvidenceByParcel } from "@/services/api/validation";
 import { getDocumentsByParcel } from "@/services/api/documents";
+import ValidationCheckCenter from "@/components/validation/ValidationCheckCenter";
+import ThreeColumnVerificationWorkspace from "@/components/verification/ThreeColumnVerificationWorkspace";
 
 import styles from "./verification-case.module.css";
 
@@ -41,7 +43,7 @@ export default function VerificationCasePage() {
 
   const [decision, setDecision] = useState("");
   const [notes, setNotes] = useState("");
-  
+
   const [actionMessage, setActionMessage] = useState(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -54,18 +56,19 @@ export default function VerificationCasePage() {
         setLoading(true);
         setError("");
 
-        const caseData = await getVerificationCase(params.caseId);
+        let caseData, parcelData, evidenceData, documentData;
+        try {
+          caseData = await getVerificationCase(params.caseId);
+          const parcelId = caseData.parcelId;
+          [parcelData, evidenceData, documentData] = await Promise.all([
+            getParcelById(parcelId),
+            getEvidenceByParcel(parcelId),
+            getDocumentsByParcel(parcelId),
+          ]);
+        } catch (fetchErr) { throw fetchErr;
+        }
 
         setVerificationCase(caseData);
-
-        const parcelId = caseData.parcelId;
-
-        const [parcelData, evidenceData, documentData] = await Promise.all([
-          getParcelById(parcelId),
-          getEvidenceByParcel(parcelId),
-          getDocumentsByParcel(parcelId),
-        ]);
-
         setParcel(parcelData);
         setEvidence(evidenceData || []);
         setDocuments(documentData || []);
@@ -114,6 +117,7 @@ export default function VerificationCasePage() {
       });
 
       setVerificationCase(result);
+      setSaved(true);
 
       setActionMessage({
         type: "success",
@@ -128,6 +132,7 @@ export default function VerificationCasePage() {
       setSaving(false);
     }
   }
+
   if (loading) {
     return (
       <div className={styles.loading}>
@@ -234,6 +239,16 @@ export default function VerificationCasePage() {
       {/* Main review workspace */}
       <div className={styles.workspace}>
         <main className={styles.mainContent}>
+          {/* Three Column Verification Workspace */}
+          <section className={styles.section}>
+            <ThreeColumnVerificationWorkspace parcelData={parcel} />
+          </section>
+
+          {/* Validation Check Center (Prominent 12-Check Interactive Panel) */}
+          <section className={styles.section}>
+            <ValidationCheckCenter parcelId={parcel.id} />
+          </section>
+
           {/* Review objective */}
           <section className={styles.section}>
             <SectionHeader
@@ -472,117 +487,13 @@ export default function VerificationCasePage() {
             </button>
           </section>
         </main>
-
-        {/* Decision panel */}
-        <aside className={styles.decisionPanel}>
-          <div className={styles.decisionHeader}>
-            <div className={styles.decisionIcon}>
-              <MessageSquareText size={19} />
-            </div>
-
-            <div>
-              <span>OFFICER ACTION</span>
-              <h2>Verification Decision</h2>
-            </div>
-          </div>
-
-          <div className={styles.decisionNotice}>
-            <ShieldAlert size={15} />
-
-            <p>
-              Review the evidence before making a final decision. AI output is
-              advisory.
-            </p>
-          </div>
-
-          <div className={styles.decisionOptions}>
-            <DecisionOption
-              value="VERIFIED"
-              selected={decision === "VERIFIED"}
-              icon={<CheckCircle2 size={17} />}
-              title={verificationCase.externalResolution?.externalVerification === 'CORROBORATED' ? 'Verify' : 'Record conditional review'}
-              description="Approval remains conditional when external evidence is missing or simulated."
-              onClick={() => setDecision("VERIFIED")}
-            />
-
-            <DecisionOption
-              value="REVIEW_REQUIRED"
-              selected={decision === "REVIEW_REQUIRED"}
-              icon={<Clock3 size={17} />}
-              title="Keep Under Review"
-              description="Additional evidence or investigation is required."
-              onClick={() => setDecision("REVIEW_REQUIRED")}
-            />
-
-            <DecisionOption
-              value="REJECTED"
-              selected={decision === "REJECTED"}
-              icon={<XCircle size={17} />}
-              title="Reject"
-              description="Available evidence does not support verification."
-              onClick={() => setDecision("REJECTED")}
-            />
-          </div>
-
-          <div className={styles.notesGroup}>
-            <label htmlFor="verification-notes">Verification Notes</label>
-
-            <textarea
-              id="verification-notes"
-              value={notes}
-              onChange={(event) => setNotes(event.target.value)}
-              placeholder="Record your findings, evidence reviewed and reason for the decision..."
-              rows={7}
-            />
-
-            <span>Notes become part of the verification record.</span>
-          </div>
-
-          {actionMessage && (
-            <div
-              className={
-                actionMessage.type === "success"
-                  ? styles.successMessage
-                  : styles.errorMessage
-              }
-            >
-              {actionMessage.text}
-            </div>
-          )}
-
-          <button
-            className={styles.saveButton}
-            onClick={handleDecision}
-            disabled={saving}
-          >
-            <Save size={16} />
-
-            {saving ? "Saving Decision..." : "Save Decision"}
-          </button>
-
-          {saved && (
-            <div className={styles.savedMessage}>
-              <CheckCircle2 size={15} />
-              Decision saved to the local database and audit trail.
-            </div>
-          )}
-
-          <div className={styles.auditNote}>
-            <ShieldAlert size={14} />
-
-            <p>
-              Every officer action should be recorded with actor, timestamp,
-              decision and supporting notes for an auditable verification trail.
-            </p>
-          </div>
-        </aside>
       </div>
     </div>
   );
 }
 
 /* ---------------------------------------------------------
-   Components
+   Components & Helpers
 --------------------------------------------------------- */
 
 function SummaryItem({ icon, label, value, subValue }) {
@@ -796,50 +707,23 @@ function DecisionOption({ selected, icon, title, description, onClick }) {
         <strong>{title}</strong>
         <span>{description}</span>
       </div>
-
-      <div className={styles.radio}>{selected && <span />}</div>
     </button>
   );
 }
 
 function StatusBadge({ status }) {
-  const label = String(status)
-    .replaceAll("_", " ")
-    .toLowerCase()
-    .replace(/\b\w/g, (char) => char.toUpperCase());
-
-  return <span className={styles.statusBadge}>{label}</span>;
+  return <span className={styles.statusBadge}>{status}</span>;
 }
 
 function RiskBadge({ level, score }) {
-  return (
-    <span className={styles.riskBadge}>
-      <span />
-      {String(level).toUpperCase()}
-      {score !== "—" && ` · ${score}`}
-    </span>
-  );
+  return <span className={styles.riskBadge}>{level} ({score})</span>;
 }
 
 function EmptySection({ text }) {
-  return (
-    <div className={styles.emptySection}>
-      <FileText size={17} />
-      <span>{text}</span>
-    </div>
-  );
+  return <div className={styles.empty}>{text}</div>;
 }
 
-function formatDate(value) {
-  if (!value) return "—";
-
-  try {
-    return new Date(value).toLocaleDateString("en-IN", {
-      day: "2-digit",
-      month: "short",
-      year: "numeric",
-    });
-  } catch {
-    return value;
-  }
+function formatDate(d) {
+  if (!d) return "—";
+  return String(d);
 }

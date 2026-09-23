@@ -90,6 +90,14 @@
   background: var(--color-surface);
   border-radius: 12px;
   text-align: right;
+  cursor: pointer;
+  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.riskBox:hover {
+  border-color: #3b82f6;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.1);
 }
 
 .riskBox span {

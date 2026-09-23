@@ -1,24 +1,21 @@
 "use client";
 
+import { useParams } from "next/navigation";
 import { useState } from "react";
-import { usePathname } from "next/navigation";
 import { Bot, X } from "lucide-react";
 import AssistantPanel from "./AssistantPanel";
 import styles from "./assistant.module.css";
 
 export default function AssistantWidget({ parcelId }) {
+  const params = useParams();
+  parcelId = parcelId || params.recordId || params.parcelId;
   const [open, setOpen] = useState(false);
-  const pathname = usePathname();
-  const routeParcelId = pathname?.match(/^\/records\/([^/]+)/)?.[1];
-  const activeParcelId = parcelId || (routeParcelId ? decodeURIComponent(routeParcelId) : "");
-
-  if (!activeParcelId) return null;
 
   return (
     <>
       {open && (
         <AssistantPanel
-          parcelId={activeParcelId}
+          parcelId={parcelId}
           onClose={() => setOpen(false)}
         />
       )}

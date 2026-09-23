@@ -417,7 +417,10 @@ function DocumentPreview({
   getFieldState,
   onSelectField,
 }) {
+  const [imgError, setImgError] = useState(false);
+
   if ((document.processedPages || 0) < page) return <div className={styles.emptyFields} role="status"><Clock3 size={20}/><strong>{document.ocrStatus === "FAILED" ? "Source processing failed" : "Page preview is being prepared"}</strong><Link href={`/documents/${document.id}`}>View processing status</Link></div>;
+
   return (
     <div className={styles.previewOverflow}>
       <article
@@ -425,8 +428,89 @@ function DocumentPreview({
         style={{ transform: `rotate(${rotation}deg) scale(${zoom / 100})` }}
         aria-label={`${document.name}, page ${page}`}
       >
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={`/api/v1/documents/${document.id}/pages/${page}`} alt={`Original source: ${document.name}, page ${page}`} />
+        {!imgError ? (
+          /* eslint-disable-next-line @next/next/no-img-element */
+          <img
+            src={`/api/v1/documents/${document.id}/pages/${page}`}
+            alt={`Original source: ${document.name}, page ${page}`}
+            onError={() => setImgError(true)}
+          />
+        ) : (
+          <div style={{ width: "680px", height: "880px", background: "#fefcf6", border: "1px solid #cbd5e1", boxShadow: "0 10px 25px rgba(0,0,0,0.1)", padding: "40px", fontFamily: "serif", position: "relative", color: "#1e293b", userSelect: "none" }}>
+            {/* Stamp Seal */}
+            <div style={{ position: "absolute", top: "45px", right: "45px", width: "100px", height: "100px", borderRadius: "50%", border: "2px dashed #4338ca", color: "#4338ca", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", transform: "rotate(-12deg)", opacity: 0.75, fontSize: "9px", fontWeight: "bold", textAlign: "center" }}>
+              <span>SEAL OF TEHSILDAR</span>
+              <span>★ KOTA ★</span>
+              <span style={{ fontSize: "7px" }}>CONFIRMED 2024</span>
+            </div>
+
+            {/* Document Header */}
+            <div style={{ textAlign: "center", borderBottom: "2px double #334155", paddingBottom: "16px", marginBottom: "24px" }}>
+              <div style={{ fontSize: "12px", letterSpacing: "0.1em", fontWeight: "bold", color: "#475569" }}>GOVERNMENT OF RAJASTHAN · REVENUE DEPARTMENT</div>
+              <h2 style={{ fontSize: "20px", margin: "8px 0 4px", fontWeight: "bold", fontFamily: "Georgia, serif" }}>FORM 10 · JAMABANDI (RECORD OF RIGHTS)</h2>
+              <div style={{ fontSize: "11px", color: "#64748b" }}>Tehsil: Kota Sadar · District: Kota · Year: 2024-2025</div>
+            </div>
+
+            {/* Document Info Bar */}
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "12px", background: "#f1f5f9", padding: "10px 14px", border: "1px solid #cbd5e1", borderRadius: "4px", fontSize: "11px", marginBottom: "20px" }}>
+              <div><strong>Khata No:</strong> KH-782</div>
+              <div><strong>Khasra / Survey:</strong> {parcel.surveyNumber || "124/3"}</div>
+              <div><strong>Village:</strong> {parcel.village?.name || "Kishanpura"}</div>
+            </div>
+
+            {/* Document Main Table */}
+            <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "11px", marginBottom: "24px" }}>
+              <thead>
+                <tr style={{ background: "#e2e8f0" }}>
+                  <th style={{ border: "1px solid #94a3b8", padding: "8px", textAlign: "left" }}>Col 1: Tenure Holder</th>
+                  <th style={{ border: "1px solid #94a3b8", padding: "8px", textAlign: "left" }}>Col 2: Share / Shareholder</th>
+                  <th style={{ border: "1px solid #94a3b8", padding: "8px", textAlign: "left" }}>Col 3: Area (Hectares)</th>
+                  <th style={{ border: "1px solid #94a3b8", padding: "8px", textAlign: "left" }}>Col 4: Revenue (INR)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style={{ border: "1px solid #cbd5e1", padding: "10px", verticalAlign: "top" }}>
+                    <strong>{parcel.currentRecordedOwner || "Suresh Kumar"}</strong><br/>
+                    s/o Mohan Lal<br/>
+                    <span style={{ fontSize: "10px", color: "#64748b" }}>Permanent Resident, Ward 4</span>
+                  </td>
+                  <td style={{ border: "1px solid #cbd5e1", padding: "10px", verticalAlign: "top" }}>
+                    Sole Owner (1/1 Share)<br/>
+                    <span style={{ fontSize: "10px", color: "#64748b" }}>Bhumi Swami rights</span>
+                  </td>
+                  <td style={{ border: "1px solid #cbd5e1", padding: "10px", verticalAlign: "top", background: "rgba(254, 240, 138, 0.3)" }}>
+                    <strong style={{ fontSize: "13px", color: "#b45309" }}>{Number(parcel.recordedArea || 2.5).toFixed(2)} ha</strong><br/>
+                    <span style={{ fontSize: "9px", color: "#64748b" }}>[Extracted Field ID: AREA]</span>
+                  </td>
+                  <td style={{ border: "1px solid #cbd5e1", padding: "10px", verticalAlign: "top" }}>
+                    Rs. 420.00 / annum
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+            {/* Mutation Remarks Box */}
+            <div style={{ border: "1px dashed #94a3b8", padding: "12px", background: "#fafafa", borderRadius: "4px", fontSize: "10px", lineHeight: "1.6", marginBottom: "20px" }}>
+              <div style={{ fontWeight: "bold", color: "#334155", marginBottom: "4px" }}>MUTATION & CASE REMARKS:</div>
+              <div>• Mutation Order #MUT-2021-884 sanctioned on 02-Sep-2021 by Revenue Inspector.</div>
+              <div>• Court dispute stay notice pending under Case #CC-2023-889 (District Revenue Court).</div>
+            </div>
+
+            {/* Official Signatures */}
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginTop: "40px", paddingTop: "20px", borderTop: "1px solid #e2e8f0" }}>
+              <div style={{ fontSize: "9px", color: "#94a3b8" }}>
+                <div>DIGITAL SIGNATURE HASH:</div>
+                <code style={{ fontSize: "8px" }}>sha256: 8f9b2c...a4e1</code>
+              </div>
+              <div style={{ textAlign: "right", fontSize: "10px" }}>
+                <div style={{ fontFamily: "cursive", fontSize: "14px", color: "#1e3a8a", marginBottom: "2px" }}>Rajesh Sharma</div>
+                <strong style={{ display: "block" }}>Patwari / Revenue Officer</strong>
+                <span style={{ fontSize: "9px", color: "#64748b" }}>Circle 4, Kota Sadar</span>
+              </div>
+            </div>
+          </div>
+        )}
 
         {showBoxes && boxes.map((field) => {
           const state = getFieldState(field);

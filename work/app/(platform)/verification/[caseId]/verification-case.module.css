@@ -162,10 +162,8 @@
 /* Workspace */
 
 .workspace {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) 350px;
-  gap: 18px;
-  align-items: start;
+  display: block;
+  width: 100%;
 }
 
 .mainContent {

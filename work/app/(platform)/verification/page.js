@@ -203,7 +203,6 @@ export default function VerificationPage() {
               <option value="ALL">All Status</option>
               <option value="PENDING_REVIEW">Pending Review</option>
               <option value="VERIFIED">Verified</option>
-              <option value="CONDITIONAL_REVIEWED">Conditionally reviewed</option>
               <option value="REJECTED">Rejected</option>
             </select>
           </div>

@@ -1,32 +1,32 @@
 export const dashboard = {
-  totalRecords: 12847,
+  totalRecords: 24582,
 
-  processedRecords: 11786,
+  processedRecords: 24175,
 
-  verifiedRecords: 10942,
+  verifiedRecords: 22891,
 
-  reviewRequired: 532,
+  reviewRequired: 1284,
 
-  highRisk: 84,
+  highRisk: 147,
 
-  criticalRisk: 17,
+  criticalRisk: 12,
 
-  processingToday: 428,
+  processingToday: 512,
 
-  averageProcessingTime: "3m 42s",
-  recordHealth: 87,
+  averageProcessingTime: "3.8s",
+  recordHealth: 93,
 
   riskDistribution: {
-    low: 9240,
-    medium: 2350,
-    high: 1020,
-    critical: 237,
+    low: 24014,
+    medium: 421,
+    high: 135,
+    critical: 12,
   },
 
   validationDistribution: {
-    verified: 10942,
-    reviewRequired: 532,
-    highRisk: 84,
-    critical: 17,
+    verified: 22891,
+    reviewRequired: 1284,
+    highRisk: 135,
+    critical: 12,
   },
 };

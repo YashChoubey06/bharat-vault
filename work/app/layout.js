@@ -1,3 +1,4 @@
+import "@/styles/utilities.css";
 import "./globals.css";
 
 import { AuthProvider } from "@/context/AuthContext";

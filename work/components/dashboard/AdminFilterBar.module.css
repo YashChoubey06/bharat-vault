@@ -1,0 +1,134 @@
+.barContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  background: var(--bg-surface, #ffffff);
+  border: 1px solid var(--border-subtle, #e2e8f0);
+  border-radius: 12px;
+  padding: 10px 16px;
+  margin-bottom: 20px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  flex-wrap: wrap;
+}
+
+.controlsGroup {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.labelGroup {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #475569;
+  margin-right: 4px;
+}
+
+.selectWrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.selectInput {
+  appearance: none;
+  background: #f8fafc;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  padding: 6px 30px 6px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #1e293b;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.15s ease;
+  min-width: 120px;
+}
+
+.selectInput:hover:not(:disabled) {
+  border-color: #4f46e5;
+  background: #ffffff;
+}
+
+.selectInput:focus:not(:disabled) {
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.12);
+}
+
+.selectInput:disabled {
+  background: #f1f5f9;
+  color: #94a3b8;
+  border-color: #e2e8f0;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.chevronIcon {
+  position: absolute;
+  right: 10px;
+  pointer-events: none;
+  color: #64748b;
+}
+
+.scopeBadgeGroup {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.scopeBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  background: #eef2ff;
+  border: 1px solid #c7d2fe;
+  color: #4338ca;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.resetButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: transparent;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #64748b;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.resetButton:hover {
+  background: #f1f5f9;
+  color: #1e293b;
+  border-color: #94a3b8;
+}
+
+@media (max-width: 768px) {
+  .barContainer {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .controlsGroup {
+    width: 100%;
+  }
+
+  .selectInput {
+    flex: 1;
+    min-width: 100px;
+  }
+}

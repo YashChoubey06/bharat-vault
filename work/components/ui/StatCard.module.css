@@ -1,0 +1,119 @@
+.statCard {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 16px;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
+}
+
+.statCard:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-hover);
+  border-color: #cbd5e1;
+}
+
+.cardTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.categoryLabel {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-subtle);
+}
+
+.trendBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.trendBadge.emerald {
+  background: var(--badge-emerald-bg);
+  color: var(--badge-emerald-text);
+  border: 1px solid var(--badge-emerald-border);
+}
+
+.trendBadge.rose {
+  background: var(--badge-rose-bg);
+  color: var(--badge-rose-text);
+  border: 1px solid var(--badge-rose-border);
+}
+
+.trendBadge.amber {
+  background: var(--badge-amber-bg);
+  color: var(--badge-amber-text);
+  border: 1px solid var(--badge-amber-border);
+}
+
+.cardBottom {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.valueGroup {
+  display: flex;
+  flex-direction: column;
+}
+
+.value {
+  font-size: 30px;
+  font-weight: 700;
+  color: var(--text-main);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.subtext {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 4px;
+  font-weight: 500;
+}
+
+.iconPill {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px; /* rounded-xl */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.iconPill.blue {
+  background: var(--brand-50);
+  color: var(--brand-600);
+}
+
+.iconPill.emerald {
+  background: var(--badge-emerald-bg);
+  color: var(--badge-emerald-text);
+}
+
+.iconPill.amber {
+  background: var(--badge-amber-bg);
+  color: var(--badge-amber-text);
+}
+
+.iconPill.rose {
+  background: var(--badge-rose-bg);
+  color: var(--badge-rose-text);
+}

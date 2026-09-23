@@ -9,21 +9,15 @@ import {
   User,
   FileText,
   ShieldAlert,
-  AlertTriangle,
   ChevronRight,
   SlidersHorizontal,
   X,
-  Plus,
-  Trash2,
 } from "lucide-react";
 
 import {
   getParcels,
   searchParcels,
-  createParcel,
-  removeParcel,
 } from "@/services/api/parcels";
-import { useAuth } from "@/context/AuthContext";
 
 import styles from "./parcels.module.css";
 
@@ -94,7 +88,6 @@ function riskRank(risk) {
 
 export default function ParcelsPage() {
   const router = useRouter();
-  const { user } = useAuth();
 
   const [parcels, setParcels] = useState([]);
 
@@ -105,9 +98,6 @@ export default function ParcelsPage() {
   const [loading, setLoading] = useState(true);
   const [searching, setSearching] = useState(false);
   const [error, setError] = useState("");
-  const [actionError, setActionError] = useState("");
-  const [showCreate, setShowCreate] = useState(false);
-  const [saving, setSaving] = useState(false);
 
   async function loadParcels() {
     try {
@@ -213,42 +203,6 @@ export default function ParcelsPage() {
     });
   }
 
-  async function handleCreate(event) {
-    event.preventDefault();
-    setSaving(true);
-    setActionError("");
-    const form = new FormData(event.currentTarget);
-    try {
-      const parcel = await createParcel({
-        surveyNumber: form.get("surveyNumber"),
-        currentRecordedOwner: form.get("owner"),
-        khataNumber: form.get("khataNumber"),
-        village: form.get("village"),
-        tehsil: form.get("tehsil"),
-        district: user?.district || form.get("district"),
-        recordedArea: form.get("recordedArea") ? Number(form.get("recordedArea")) : null,
-      });
-      setShowCreate(false);
-      await loadParcels();
-      router.push(`/records/${parcel.id}`);
-    } catch (err) {
-      setActionError(err.message || "Could not create parcel.");
-    } finally {
-      setSaving(false);
-    }
-  }
-
-  async function handleRemove(parcel) {
-    if (!window.confirm(`Remove ${parcel.id} from the active registry? This is only allowed after its documents are removed.`)) return;
-    setActionError("");
-    try {
-      await removeParcel(parcel.id);
-      await loadParcels();
-    } catch (err) {
-      setActionError(err.message || "Could not remove parcel.");
-    }
-  }
-
   const hasFilters =
     search ||
     riskFilter !== "ALL" ||
@@ -305,13 +259,15 @@ export default function ParcelsPage() {
           </p>
         </div>
 
-        <div className={styles.headerActions}>
-          <button type="button" className={styles.refreshButton} onClick={loadParcels}><RefreshCw size={15} />Refresh</button>
-          <button type="button" className={styles.primaryButton} onClick={() => {setActionError("");setShowCreate(true);}}><Plus size={15} />Add Parcel</button>
-        </div>
+        <button
+          type="button"
+          className={styles.refreshButton}
+          onClick={loadParcels}
+        >
+          <RefreshCw size={15} />
+          Refresh
+        </button>
       </header>
-
-      {actionError && <div className={styles.actionError} role="alert"><AlertTriangle size={16}/><span>{actionError}</span><button onClick={() => setActionError("")} aria-label="Dismiss"><X size={14}/></button></div>}
 
       {/* STATS */}
       <section className={styles.statsGrid}>
@@ -596,10 +552,17 @@ export default function ParcelsPage() {
                       </td>
 
                       <td>
-                        <div className={styles.rowActions}>
-                          <button type="button" className={styles.removeButton} title="Remove parcel" aria-label={`Remove ${parcel.id}`} onClick={(event) => {event.stopPropagation();handleRemove(parcel);}}><Trash2 size={14}/></button>
-                          <button type="button" className={styles.openButton} onClick={(event) => {event.stopPropagation();openParcel(parcel);}}>Open<ChevronRight size={14} /></button>
-                        </div>
+                        <button
+                          type="button"
+                          className={styles.openButton}
+                          onClick={(event) => {
+                            event.stopPropagation();
+                            openParcel(parcel);
+                          }}
+                        >
+                          Open
+                          <ChevronRight size={14} />
+                        </button>
                       </td>
                     </tr>
                   );
@@ -629,24 +592,6 @@ export default function ParcelsPage() {
           </p>
         </div>
       </section>
-
-      {showCreate && <div className={styles.modalBackdrop} role="presentation" onMouseDown={() => !saving && setShowCreate(false)}>
-        <section className={styles.modal} role="dialog" aria-modal="true" aria-labelledby="create-parcel-title" onMouseDown={event => event.stopPropagation()}>
-          <div className={styles.modalHeader}><div><span>LOCAL PARCEL REGISTRY</span><h2 id="create-parcel-title">Add parcel</h2></div><button type="button" onClick={() => setShowCreate(false)} aria-label="Close"><X size={17}/></button></div>
-          <form onSubmit={handleCreate} className={styles.createForm}>
-            <label>Survey / Khasra number<input name="surveyNumber" required maxLength={100} autoFocus /></label>
-            <label>Recorded owner<input name="owner" required maxLength={200} /></label>
-            <label>Khata number<input name="khataNumber" maxLength={100} /></label>
-            <label>Recorded area (hectares)<input name="recordedArea" type="number" min="0.0001" step="0.0001" /></label>
-            <label>Village<input name="village" required maxLength={100} /></label>
-            <label>Tehsil<input name="tehsil" required maxLength={100} /></label>
-            <label>District<input name="district" value={user?.district || ""} readOnly /></label>
-            <p>Manually entered context is marked for review. Add GIS evidence from the parcel’s GIS tab and source records from Documents.</p>
-            {actionError && <p className={styles.formError} role="alert">{actionError}</p>}
-            <div className={styles.modalActions}><button type="button" onClick={() => setShowCreate(false)} disabled={saving}>Cancel</button><button type="submit" className={styles.primaryButton} disabled={saving}>{saving ? "Creating…" : "Create parcel"}</button></div>
-          </form>
-        </section>
-      </div>}
     </div>
   );
 }

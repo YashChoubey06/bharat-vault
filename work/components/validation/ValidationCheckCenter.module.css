@@ -1,0 +1,440 @@
+.container {
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #f1f5f9;
+  padding-bottom: 16px;
+}
+
+.titleGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.eyebrow {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: #2563eb;
+  text-transform: uppercase;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.badgeSummary {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.passChip {
+  background: #ecfdf5;
+  color: #047857;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  border: 1px solid #a7f3d0;
+}
+
+.warnChip {
+  background: #fffbe6;
+  color: #b45309;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  border: 1px solid #fef08a;
+}
+
+.failChip {
+  background: #fef2f2;
+  color: #b91c1c;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  border: 1px solid #fca5a5;
+}
+
+/* -------------------------------------------------------------------------- */
+/* 12 Validation Checks Grid                                                  */
+/* -------------------------------------------------------------------------- */
+.checksGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+@media (max-width: 900px) {
+  .checksGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .checksGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.checkCard {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  cursor: pointer;
+  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+  user-select: none;
+}
+
+.checkCard:hover {
+  background: white;
+  border-color: #3b82f6;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.08);
+}
+
+.checkCardSelected {
+  background: #eff6ff !important;
+  border-color: #2563eb !important;
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
+}
+
+/* Land Lens Add-on: Soft highlight animation (fades background tint in over 500ms on mount) */
+@keyframes softHighlightWarnAnim {
+  0% {
+    background-color: rgba(254, 240, 138, 0);
+    box-shadow: inset 0 0 0 1px rgba(234, 179, 8, 0);
+  }
+  50% {
+    background-color: rgba(254, 240, 138, 0.5);
+    box-shadow: inset 0 0 0 1px rgba(234, 179, 8, 0.4);
+  }
+  100% {
+    background-color: #fffbe6;
+    box-shadow: inset 0 0 0 1px #fef08a;
+  }
+}
+
+@keyframes softHighlightFailAnim {
+  0% {
+    background-color: rgba(254, 226, 226, 0);
+    box-shadow: inset 0 0 0 1px rgba(220, 38, 38, 0);
+  }
+  50% {
+    background-color: rgba(254, 226, 226, 0.6);
+    box-shadow: inset 0 0 0 1px rgba(220, 38, 38, 0.4);
+  }
+  100% {
+    background-color: #fef2f2;
+    box-shadow: inset 0 0 0 1px #fca5a5;
+  }
+}
+
+.softHighlightWarn {
+  animation: softHighlightWarnAnim 500ms ease-out forwards;
+}
+
+.softHighlightFail {
+  animation: softHighlightFailAnim 500ms ease-out forwards;
+}
+
+.checkName {
+  font-size: 13px;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.checkIconWrapper {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+
+.iconPass {
+  background: #d1fae5;
+  color: #059669;
+}
+
+.iconWarn {
+  background: #fef08a;
+  color: #d97706;
+}
+
+.iconFail {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Drill-Down Investigation Workspace                                          */
+/* -------------------------------------------------------------------------- */
+.drillDownPanel {
+  background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
+  border: 1px solid #cbd5e1;
+  border-radius: 14px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  animation: slideDown 0.25s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.drillHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px dashed #cbd5e1;
+  padding-bottom: 12px;
+}
+
+.drillTitleRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.drillTitleRow h3 {
+  font-size: 16px;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0;
+}
+
+.stepFlowIndicator {
+  font-size: 11px;
+  color: #64748b;
+  font-weight: 600;
+}
+
+/* 4 Interactive Flow Steps */
+.stepGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+@media (max-width: 800px) {
+  .stepGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.stepBox {
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.stepBoxTitle {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  color: #2563eb;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.valueRowList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.valueItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  background: #f8fafc;
+  border-radius: 8px;
+  border: 1px solid #f1f5f9;
+  font-size: 12px;
+}
+
+.valueLabel {
+  color: #64748b;
+  font-weight: 600;
+}
+
+.valueVal {
+  color: #0f172a;
+  font-weight: 800;
+}
+
+/* Difference Box */
+.differenceHighlight {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.differenceHighlightWarn {
+  background: #fffbe6;
+  border-color: #fef08a;
+}
+
+.differenceHighlightDanger {
+  background: #fef2f2;
+  border-color: #fca5a5;
+}
+
+.calloutBadge {
+  font-size: 11px;
+  font-weight: 800;
+  color: #b45309;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(254, 240, 138, 0.6);
+  padding: 2px 8px;
+  border-radius: 4px;
+  width: fit-content;
+}
+
+.differenceHighlightDanger .calloutBadge {
+  color: #b91c1c;
+  background: rgba(254, 226, 226, 0.8);
+}
+
+.differenceTitle {
+  font-size: 13px;
+  font-weight: 800;
+  color: #0f172a;
+  margin-top: 2px;
+}
+
+.differenceText {
+  font-size: 12px;
+  font-weight: 600;
+  color: #334155;
+  white-space: pre-line;
+  line-height: 1.45;
+  margin: 0;
+}
+
+/* Source Documents List */
+.docList {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.docItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  background: #f8fafc;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  font-size: 12px;
+}
+
+.docItemLeft {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #1e293b;
+  font-weight: 700;
+}
+
+.docPageRef {
+  color: #64748b;
+  font-size: 11px;
+}
+
+/* Action Buttons */
+.actionRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-top: 6px;
+  flex-wrap: wrap;
+}
+
+.btnActionPrimary {
+  padding: 9px 16px;
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.15s ease;
+}
+
+.btnActionPrimary:hover {
+  background: #1d4ed8;
+}
+
+.btnActionSecondary {
+  padding: 9px 14px;
+  background: white;
+  color: #334155;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.15s ease;
+}
+
+.btnActionSecondary:hover {
+  background: #f8fafc;
+  border-color: #94a3b8;
+}

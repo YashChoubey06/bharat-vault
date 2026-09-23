@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 
 import { getParcelById } from "@/services/api/parcels";
+import AssistantWidget from "@/components/assistant/AssistantWidget";
 
 import styles from "./record.module.css";
 
@@ -382,6 +383,8 @@ export default function ParcelRecordPage() {
         </section>
       </div>
 
+      {/* Assistant */}
+      <AssistantWidget parcelId={parcel.id} />
     </div>
   );
 }

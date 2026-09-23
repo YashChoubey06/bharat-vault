@@ -1,18 +1,20 @@
 .shell {
   min-height: 100vh;
-
-  background: var(--color-background);
+  background: var(--bg-app);
 }
 
 .main {
   min-height: 100vh;
-
   margin-left: var(--sidebar-width);
   padding-top: var(--header-height);
+  padding: calc(var(--header-height) + 24px) 32px 32px 32px;
+  background: var(--bg-app);
+  box-sizing: border-box;
 }
 
 @media (max-width: 900px) {
   .main {
     margin-left: 0;
+    padding: calc(var(--header-height) + 16px) 16px 24px 16px;
   }
 }

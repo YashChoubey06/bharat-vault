@@ -250,6 +250,30 @@
   border-bottom: 0;
 }
 
+.typeCell {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10px;
+  font-weight: 600;
+  color: #334155;
+}
+
+.typeCell svg {
+  color: #4f46e5;
+  flex: 0 0 auto;
+}
+
+.docCode {
+  padding: 2px 6px;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+  background: #f8fafc;
+  color: #475569;
+  font-family: monospace;
+  font-size: 9px;
+}
+
 /* =========================================
    PARCEL CELL
 ========================================= */

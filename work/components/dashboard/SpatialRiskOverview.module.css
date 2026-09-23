@@ -1,0 +1,250 @@
+.cardContainer {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+  position: relative;
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.titleGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10px;
+  font-weight: 800;
+  color: #4f46e5;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+
+.subtitle {
+  font-size: 12px;
+  color: #64748b;
+  margin: 0;
+}
+
+.sourceBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: 6px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  color: #475569;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.mapWrapper {
+  position: relative;
+  width: 100%;
+  height: 380px;
+  background: #f8fafc;
+  border: 1px solid #cbd5e1;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.mapCanvas {
+  width: 100%;
+  height: 100%;
+}
+
+.legendBar {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 10;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(4px);
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+.legendItem {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #334155;
+}
+
+.legendDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: 40px;
+  text-align: center;
+  color: #64748b;
+  gap: 10px;
+  background: #f8fafc;
+}
+
+.emptyTitle {
+  font-size: 14px;
+  font-weight: 700;
+  color: #334155;
+}
+
+.emptySub {
+  font-size: 12px;
+  color: #94a3b8;
+  max-width: 320px;
+}
+
+/* Compact Parcel Click Preview Popup */
+.parcelPreviewCard {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+  z-index: 20;
+  width: 310px;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  animation: fadeIn 0.2s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.previewHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.previewTitle {
+  font-size: 14px;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.previewSubtitle {
+  font-size: 11px;
+  color: #64748b;
+}
+
+.previewRiskBadge {
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.badge_critical { background: #fef2f2; color: #b91c1c; border: 1px solid #fca5a5; }
+.badge_high { background: #fff7ed; color: #c2410c; border: 1px solid #ffedd5; }
+.badge_medium { background: #fffbe6; color: #b45309; border: 1px solid #fef08a; }
+.badge_low { background: #f0fdf4; color: #15803d; border: 1px solid #bbf7d0; }
+
+.previewGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  background: #f8fafc;
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 11px;
+}
+
+.previewMetaItem {
+  display: flex;
+  flex-direction: column;
+}
+
+.previewMetaItem span { color: #64748b; font-size: 10px; }
+.previewMetaItem strong { color: #0f172a; font-weight: 700; }
+
+.conflictBanner {
+  font-size: 11px;
+  font-weight: 600;
+  color: #9a3412;
+  background: #fff7ed;
+  border: 1px solid #ffedd5;
+  padding: 6px 10px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.openParcelBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: #2563eb;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s ease;
+  width: 100%;
+}
+
+.openParcelBtn:hover {
+  background: #1d4ed8;
+}
+
+.hintBar {
+  font-size: 11px;
+  color: #64748b;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 4px;
+}

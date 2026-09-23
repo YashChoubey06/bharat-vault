@@ -1,0 +1,214 @@
+.container {
+  background: white;
+  border: 1px solid #cbd5e1;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #f1f5f9;
+  padding-bottom: 16px;
+}
+
+.titleGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.eyebrow {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: #2563eb;
+  text-transform: uppercase;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: 900;
+  color: #0f172a;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.badgePower {
+  background: #eff6ff;
+  color: #1d4ed8;
+  border: 1px solid #bfdbfe;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 4px 10px;
+  border-radius: 9999px;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Clean Row-Based Verification Workspace Table                              */
+/* -------------------------------------------------------------------------- */
+.tableWrapper {
+  overflow-x: auto;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+}
+
+.workspaceTable {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 13px;
+}
+
+.workspaceTable th {
+  background: #f8fafc;
+  color: #475569;
+  font-weight: 800;
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 14px 18px;
+  border-bottom: 1px solid #cbd5e1;
+}
+
+.workspaceTable td {
+  padding: 16px 18px;
+  border-bottom: 1px solid #f1f5f9;
+  color: #1e293b;
+  font-weight: 600;
+  vertical-align: middle;
+}
+
+.workspaceTable tr:last-child td {
+  border-bottom: none;
+}
+
+.fieldCell {
+  font-weight: 800 !important;
+  color: #0f172a !important;
+  background: #f8fafc;
+  width: 120px;
+}
+
+.recordValBox {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.recordVal {
+  font-size: 15px;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.recordSub {
+  font-size: 11px;
+  color: #64748b;
+}
+
+.evidenceGroup {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.evidenceChip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  padding: 5px 10px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #334155;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.evidenceChip:hover {
+  background: #e2e8f0;
+  color: #0f172a;
+}
+
+.conflictHighlightRow {
+  background: #fffdf5 !important;
+}
+
+.statusMatch {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: #ecfdf5;
+  color: #047857;
+  border: 1px solid #a7f3d0;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.statusConflict {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: #fffbe6;
+  color: #b45309;
+  border: 1px solid #fef08a;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+/* Action Pop-Up Button */
+.btnResolveModal {
+  padding: 8px 14px;
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.15s ease;
+  box-shadow: 0 2px 6px rgba(37, 99, 235, 0.2);
+}
+
+.btnResolveModal:hover {
+  background: #1d4ed8;
+  transform: translateY(-1px);
+}
+
+.btnViewDecision {
+  padding: 8px 14px;
+  background: #f1f5f9;
+  color: #334155;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.15s ease;
+}
+
+.btnViewDecision:hover {
+  background: #e2e8f0;
+  color: #0f172a;
+}

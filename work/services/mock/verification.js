@@ -4,22 +4,38 @@ function delay(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-export async function getVerificationCases() {
-  await delay(300);
+export async function getVerificationCases(params = {}) {
+  await delay(150);
 
-  return verificationCases.map((verificationCase) => ({
-    ...verificationCase,
-    assignedUser: users.find(
-      (user) => user.id === verificationCase.assignedTo
-    ),
-    parcel: parcels.find(
-      (parcel) => parcel.id === verificationCase.parcelId
-    ),
-  }));
+  const { state, district, tehsil } = params;
+
+  return verificationCases.map((vc, idx) => {
+    const baseParcel = parcels.find((p) => p.id === vc.parcelId) || parcels[0];
+
+    const displayState = state || "Rajasthan";
+    const displayDistrict = district || "Kota";
+    const displayTehsil = tehsil || "Ladpura";
+
+    return {
+      ...vc,
+      id: vc.id || `VC-${idx + 100}`,
+      assignedUser: users.find((u) => u.id === vc.assignedTo) || { name: "Officer Sharma", role: "Revenue Officer" },
+      parcel: {
+        ...baseParcel,
+        surveyNumber: vc.parcel?.surveyNumber || baseParcel.surveyNumber || `Khasra 12${idx}/3`,
+        currentRecordedOwner: vc.parcel?.currentRecordedOwner || baseParcel.currentRecordedOwner || "Recorded Owner",
+        khataNumber: vc.parcel?.khataNumber || baseParcel.khataNumber || "KH-782",
+        state: displayState,
+        district: displayDistrict,
+        tehsil: displayTehsil,
+        villageName: `${displayTehsil} Sector ${idx + 1}`,
+      },
+    };
+  });
 }
 
 export async function getVerificationCase(caseId) {
-  await delay(300);
+  await delay(200);
 
   const verificationCase = verificationCases.find(
     (item) => item.id === caseId
@@ -41,7 +57,7 @@ export async function getVerificationCase(caseId) {
 }
 
 export async function getVerificationCasesByUser(userId) {
-  await delay(300);
+  await delay(200);
 
   return verificationCases.filter(
     (item) => item.assignedTo === userId
@@ -54,7 +70,7 @@ export async function decideVerificationCase({
   notes,
   userId = "USR-001",
 }) {
-  await delay(500);
+  await delay(300);
 
   const verificationCase = verificationCases.find(
     (item) => item.id === caseId

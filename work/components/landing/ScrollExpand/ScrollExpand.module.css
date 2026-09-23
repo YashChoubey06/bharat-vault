@@ -1,0 +1,160 @@
+.scrollExpand {
+  position: relative;
+  width: 100%;
+}
+
+.scrollExpandScroller {
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  overscroll-behavior: contain;
+}
+
+.scrollExpandScroller::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollExpandTrack {
+  position: relative;
+  width: 100%;
+}
+
+.scrollExpandStage {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  overflow: hidden;
+  --se-title-size: 4rem;
+  z-index: 10;
+}
+
+.scrollExpandFrame {
+  position: absolute;
+  inset: 0;
+  clip-path: inset(21% 29% 21% 29% round 24px);
+  will-change: clip-path;
+  border-radius: 24px;
+  background: #ffffff;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+}
+
+/* HERO CADASTRAL GIS MAP CONTAINER */
+.heroMapContainer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #ffffff;
+  will-change: opacity, transform;
+}
+
+.cadastralMapImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.9;
+  filter: contrast(1.05) brightness(1.02);
+}
+
+.mapGridOverlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.svgParcelOverlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Map Pin Location Marker */
+.mapPinMarker {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid #dbeafe;
+  border-radius: 9999px;
+  padding: 0.15rem 0.55rem 0.15rem 0.35rem;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.12);
+  backdrop-filter: blur(6px);
+  transform: scale(0.9);
+}
+
+.pinLabel {
+  font-size: 0.65rem;
+  font-weight: 800;
+  color: #0f172a;
+  letter-spacing: 0.3px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  white-space: nowrap;
+}
+
+/* SCRIM OVERLAY */
+.scrollExpandScrim {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(to top, rgba(13, 14, 17, 0.85), rgba(13, 14, 17, 0.2) 50%, rgba(13, 14, 17, 0.4));
+  opacity: 0;
+}
+
+/* OVERLAY CONTAINER (Enclosing ConveyorScanner) */
+.scrollExpandOverlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  will-change: opacity, transform;
+}
+
+/* TITLE OVERLAY */
+.scrollExpandTitle {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0 6%;
+  text-align: center;
+  font-size: var(--se-title-size);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  color: #ffffff;
+  text-shadow:
+    0 4px 30px rgba(0, 0, 0, 0.95),
+    0 0 50px rgba(15, 23, 42, 0.9);
+  pointer-events: none;
+  will-change: opacity, transform;
+  z-index: 20;
+}
+
+/* SCROLL HINT */
+.scrollExpandHint {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 2rem;
+  text-align: center;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.7);
+  pointer-events: none;
+  will-change: opacity, transform;
+  z-index: 20;
+}

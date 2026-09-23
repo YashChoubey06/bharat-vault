@@ -1,0 +1,912 @@
+/* 1. OUTER CANVAS CONTAINER (LandLens-Style Canvas) */
+.outerCanvasContainer {
+  position: relative;
+  width: 100%;
+  max-width: 1240px;
+  background-color: #f8f9fb;
+  border-radius: 20px;
+  border: 1px solid #e4e9f0;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.04);
+  padding: 2.75rem 2.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, sans-serif;
+  color: #0f172a;
+}
+
+/* Dynamic Dynamic SVG Connector Overlay (Z-INDEX 10 SO LINES ARE ALWAYS VISIBLE ON TOP) */
+.dynamicConnectorSvgOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 10;
+  overflow: visible;
+}
+
+/* Header Section */
+.workflowHeader {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.65rem;
+  position: relative;
+  z-index: 3;
+}
+
+.wfBadge {
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+  color: #2563eb;
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  padding: 0.22rem 0.75rem;
+  border-radius: 9999px;
+}
+
+/* Pipeline Breadcrumb */
+.flowBreadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  padding: 0.45rem 1.15rem;
+  border-radius: 9999px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+}
+
+.flowPill {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #64748b;
+}
+
+.flowPillActive {
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: #1d4ed8;
+  background: #dbeafe;
+  padding: 0.15rem 0.6rem;
+  border-radius: 9999px;
+  border: 1px solid #93c5fd;
+}
+
+.flowArrow {
+  font-size: 0.82rem;
+  color: #94a3b8;
+}
+
+.philosophyTagline {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #2563eb;
+  letter-spacing: 0.4px;
+  margin-top: 0.15rem;
+}
+
+.philosophyDot {
+  color: #93c5fd;
+  font-size: 0.9rem;
+}
+
+/* 2. MAIN SYSTEM FRAME WITH TINTED SECTION PANELS */
+.mainSystemFrame {
+  width: 100%;
+  position: relative;
+  z-index: 3;
+}
+
+.diagramGrid {
+  display: grid;
+  grid-template-columns: 1fr 60px 1.45fr 60px 1fr;
+  align-items: stretch;
+  gap: 0;
+}
+
+.connectorColGap {
+  width: 60px;
+}
+
+/* Section Panels (Lightly Tinted Containers for Sections 01 & 03) */
+.sectionPanel {
+  background: #f3f6fa;
+  border: 1px solid #e4e9f0;
+  border-radius: 16px;
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  position: relative;
+  z-index: 3;
+}
+
+.sectionPanelCenter {
+  background: #ffffff;
+  border: 1px solid #dbeafe;
+  border-radius: 16px;
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  box-shadow: 0 4px 16px rgba(37, 99, 235, 0.03);
+  position: relative;
+  z-index: 3;
+}
+
+.diagramColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.columnHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 1.5px solid #e2e8f0;
+}
+
+.columnNumber {
+  font-size: 1.1rem;
+  font-weight: 900;
+  color: #2563eb;
+  background: #dbeafe;
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.columnTitle {
+  font-size: 1.05rem;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  color: #0f172a;
+  margin: 0;
+}
+
+.columnDesc {
+  font-size: 0.78rem;
+  color: #64748b;
+  margin: 0;
+}
+
+/* CAPTURE SECTION (Left Column) */
+.captureGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+/* Elevated White Cards (Floating Effect) */
+.wfCard {
+  background: #ffffff;
+  border: 1px solid #e4e9f0;
+  border-radius: 12px;
+  padding: 1rem 1.1rem;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.04);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  position: relative;
+  z-index: 3;
+}
+
+.wfCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.07);
+  border-color: #cbd5e1;
+}
+
+.wfCardActiveUpload {
+  border: 1.5px dashed #3b82f6;
+  background: #ffffff;
+}
+
+.wfCardIconHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.35rem;
+}
+
+.iconWithLabel {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.categoryTag {
+  display: block;
+  font-size: 0.55rem;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  color: #2563eb;
+  margin-bottom: 0.1rem;
+}
+
+.cardTitleInline {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0;
+}
+
+.cardSourceBadge {
+  font-size: 0.58rem;
+  font-weight: 800;
+  color: #475569;
+  background: #f1f5f9;
+  padding: 0.12rem 0.4rem;
+  border-radius: 4px;
+  border: 1px solid #e2e8f0;
+}
+
+.cardTitle {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0 0 0.2rem 0;
+}
+
+.cardDesc {
+  font-size: 0.78rem;
+  color: #64748b;
+  margin: 0;
+}
+
+/* Ingestion Progress Mock */
+.uploadProgressContainer {
+  margin-top: 0.65rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 0.5rem 0.65rem;
+}
+
+.progressItem {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.progressLabelRow {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.64rem;
+  font-weight: 600;
+  color: #334155;
+}
+
+.pctDone {
+  font-weight: 800;
+  color: #16a34a;
+}
+
+.pctActive {
+  font-weight: 800;
+  color: #ea580c;
+}
+
+.progressBarBg {
+  height: 5px;
+  background: #e2e8f0;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.progressBarFill {
+  height: 100%;
+  background: #16a34a;
+  border-radius: 999px;
+}
+
+.progressBarFillOrange {
+  height: 100%;
+  background: #ea580c;
+  border-radius: 999px;
+}
+
+/* CENTER CORE ENGINE COLUMN */
+.cleanEngineContainer {
+  height: 100%;
+}
+
+.centerEngineCard {
+  background: #ffffff;
+  border: 1px solid #bfdbfe;
+  border-radius: 14px;
+  padding: 1.4rem 1.5rem;
+  box-shadow:
+    0 8px 24px rgba(37, 99, 235, 0.05),
+    0 0 0 1px rgba(37, 99, 235, 0.03);
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  height: 100%;
+  position: relative;
+  z-index: 3;
+}
+
+.engineHeader {
+  text-align: center;
+}
+
+.engineBadge {
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: #1d4ed8;
+  background: #dbeafe;
+  padding: 0.18rem 0.6rem;
+  border-radius: 4px;
+}
+
+.engineTitle {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0.35rem 0 0.1rem 0;
+  letter-spacing: -0.5px;
+}
+
+.engineSubtitle {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #2563eb;
+  margin: 0;
+}
+
+/* 6 Capability Tiles */
+.tilesGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+}
+
+.capabilityTile {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 0.75rem 0.8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  transition: background 0.15s ease, border-color 0.15s ease;
+  position: relative;
+}
+
+.capabilityTile:hover {
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+}
+
+.tileIconRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.2rem;
+}
+
+.tileCheckIcon {
+  font-size: 0.6rem;
+  font-weight: 900;
+  color: #ffffff;
+  background: #2563eb;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tileAlertIcon {
+  font-size: 0.6rem;
+  font-weight: 900;
+  color: #ffffff;
+  background: #d97706;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tileAction {
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0;
+  letter-spacing: 0.3px;
+}
+
+.tileObject {
+  font-size: 0.72rem;
+  color: #64748b;
+  margin: 0;
+  line-height: 1.3;
+}
+
+/* HERO DEMO FLOW: MULTI-SOURCE RECONCILIATION */
+.reconciliationFlowHero {
+  background: #fffbeb;
+  border: 1.5px solid #fde68a;
+  border-radius: 12px;
+  padding: 1rem 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: auto;
+}
+
+.flowHeroHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.flowHeroBadge {
+  font-size: 0.6rem;
+  font-weight: 800;
+  letter-spacing: 0.6px;
+  color: #b45309;
+}
+
+.parcelTag {
+  font-size: 0.6rem;
+  font-weight: 800;
+  color: #92400e;
+  background: #fef3c7;
+  padding: 0.12rem 0.45rem;
+  border-radius: 4px;
+  border: 1px solid #fcd34d;
+}
+
+.convergingSourcesRow {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+}
+
+.sourceBox {
+  background: #ffffff;
+  border: 1px solid #fef3c7;
+  border-radius: 8px;
+  padding: 0.5rem 0.4rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+}
+
+.srcCategory {
+  font-size: 0.52rem;
+  font-weight: 800;
+  color: #b45309;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.1rem;
+}
+
+.srcLabel {
+  font-size: 0.62rem;
+  font-weight: 700;
+  color: #78350f;
+}
+
+.srcValue {
+  font-size: 0.88rem;
+  font-weight: 800;
+  color: #1e293b;
+}
+
+.convergenceCenterRow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.convergenceArrow {
+  font-size: 0.95rem;
+  font-weight: 900;
+  color: #d97706;
+}
+
+.conflictAlertBanner {
+  background: #fff7ed;
+  border: 1px solid #ffedd5;
+  color: #c2410c;
+  padding: 0.45rem 0.85rem;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  box-shadow: 0 2px 6px rgba(194, 65, 12, 0.06);
+}
+
+.conflictBadgeText {
+  display: block;
+  font-size: 0.55rem;
+  font-weight: 800;
+  letter-spacing: 0.6px;
+  color: #9a3412;
+}
+
+.conflictDescText {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: #c2410c;
+  margin: 0;
+}
+
+.riskSignalActionRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #ffffff;
+  border: 1px solid #fee2e2;
+  border-radius: 8px;
+  padding: 0.5rem 0.85rem;
+}
+
+.riskBadgePill {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  padding: 0.18rem 0.55rem;
+  border-radius: 6px;
+}
+
+.riskBadgeLabel {
+  font-size: 0.58rem;
+  font-weight: 800;
+  color: #991b1b;
+}
+
+.riskBadgeScore {
+  font-size: 0.8rem;
+  font-weight: 900;
+  color: #dc2626;
+}
+
+.actionForwardArrow {
+  font-size: 0.68rem;
+  font-weight: 800;
+  color: #991b1b;
+  letter-spacing: 0.3px;
+}
+
+/* SECTION 3: VERIFY & DELIVER (LINEAR CASCADE TOPOLOGY) */
+.cascadeContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.cascadeGapSpacer {
+  height: 1.25rem;
+}
+
+.groupSection {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin-top: 0.1rem;
+}
+
+.groupLabelNeutral {
+  font-size: 0.64rem;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  color: #2563eb;
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  padding: 0.15rem 0.55rem;
+  border-radius: 4px;
+  width: max-content;
+}
+
+.wfCardCompact {
+  background: #ffffff;
+  border: 1px solid #e4e9f0;
+  border-radius: 12px;
+  padding: 0.75rem 0.95rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.04);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  position: relative;
+  z-index: 3;
+}
+
+.wfCardCompact:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.07);
+}
+
+/* OFFICER DECISION CARD */
+.officerDecisionCard {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.4rem;
+  border: 1.5px solid #bbf7d0;
+  background: #f0fdf4;
+}
+
+.decisionIconHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.humanLoopBadge {
+  font-size: 0.55rem;
+  font-weight: 800;
+  color: #166534;
+  background: #dcfce7;
+  padding: 0.1rem 0.4rem;
+  border-radius: 4px;
+  border: 1px solid #86efac;
+}
+
+.decisionPillsRow {
+  display: flex;
+  gap: 0.4rem;
+  width: 100%;
+  margin-top: 0.2rem;
+}
+
+.decPill {
+  font-size: 0.6rem;
+  font-weight: 800;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  text-align: center;
+  flex: 1;
+}
+
+.decVerify {
+  background: #dcfce7;
+  color: #15803d;
+  border: 1px solid #86efac;
+}
+
+.decReview {
+  background: #fef3c7;
+  color: #b45309;
+  border: 1px solid #fcd34d;
+}
+
+.decReject {
+  background: #fee2e2;
+  color: #b91c1c;
+  border: 1px solid #fca5a5;
+}
+
+/* DELIVERABLES BRANCHING GRID */
+.outputsGridBranching {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.outputPillCardBranch {
+  position: relative;
+  background: #ffffff;
+  border: 1px solid #e4e9f0;
+  border-radius: 10px;
+  padding: 0.75rem 0.95rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.04);
+  transition: transform 0.2s ease, border-color 0.2s ease;
+  z-index: 3;
+}
+
+.outputPillCardBranch:hover {
+  transform: translateX(3px);
+  border-color: #cbd5e1;
+}
+
+.branchDotNodeBlue {
+  position: absolute;
+  left: 6px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 6px;
+  height: 6px;
+  background: #2563eb;
+  border-radius: 50%;
+  box-shadow: 0 0 6px rgba(37, 99, 235, 0.3);
+}
+
+.outputTitle {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.outputSub {
+  display: block;
+  font-size: 0.68rem;
+  color: #64748b;
+  line-height: 1.25;
+}
+
+/* ============================================================
+   INTERSECTION OBSERVER STATE CONTROL & GRANULAR ANIMATIONS
+   ============================================================ */
+
+/* Initial Hidden State (Before Viewport Intersection) */
+.isInitialState .animSeq0,
+.isInitialState .animSeq1,
+.isInitialState .animSeq1b,
+.isInitialState .animSeq2,
+.isInitialState .animSeq3,
+.isInitialState .animSeq3b,
+.isInitialState .animSeq4,
+.isInitialState .animSeq4a,
+.isInitialState .animSeq4b,
+.isInitialState .animSeq4c,
+.isInitialState .animSeq5,
+.isInitialState .animSeq5b,
+.isInitialState .animSeq6a,
+.isInitialState .animSeq6b,
+.isInitialState .animSeq6c,
+.isInitialState .animSeq6d {
+  opacity: 0;
+  transform: translateY(12px);
+}
+
+/* Permanent Completed State (Frozen in Final State) */
+.isCompletedState .animSeq0,
+.isCompletedState .animSeq1,
+.isCompletedState .animSeq1b,
+.isCompletedState .animSeq2,
+.isCompletedState .animSeq3,
+.isCompletedState .animSeq3b,
+.isCompletedState .animSeq4,
+.isCompletedState .animSeq4a,
+.isCompletedState .animSeq4b,
+.isCompletedState .animSeq4c,
+.isCompletedState .animSeq5,
+.isCompletedState .animSeq5b,
+.isCompletedState .animSeq6a,
+.isCompletedState .animSeq6b,
+.isCompletedState .animSeq6c,
+.isCompletedState .animSeq6d {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@keyframes seqFadeUp {
+  0% {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes softAmberPulseOnce {
+  0% {
+    box-shadow: 0 2px 6px rgba(194, 65, 12, 0.06);
+    border-color: #ffedd5;
+  }
+  50% {
+    box-shadow: 0 0 16px rgba(217, 119, 6, 0.35);
+    border-color: #f59e0b;
+  }
+  100% {
+    box-shadow: 0 2px 6px rgba(194, 65, 12, 0.06);
+    border-color: #ffedd5;
+  }
+}
+
+/* Granular Sequence Timing Keyframes */
+.isAnimatingState .animSeq0 {
+  animation: seqFadeUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) 0s both;
+}
+
+.isAnimatingState .animSeq1 {
+  animation: seqFadeUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) 0.4s both;
+}
+
+.isAnimatingState .animSeq1b {
+  animation: seqFadeUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.9s both;
+}
+
+.isAnimatingState .animSeq2 {
+  animation: seqFadeUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) 1.4s both;
+}
+
+.isAnimatingState .animSeq3 {
+  animation: seqFadeUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) 1.8s both;
+}
+
+.isAnimatingState .animSeq3b {
+  animation: seqFadeUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) 2.1s both;
+}
+
+.isAnimatingState .animSeq4 {
+  animation: seqFadeUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) 2.5s both;
+}
+
+.isAnimatingState .animSeq4a {
+  animation: seqFadeUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) 2.8s both;
+}
+
+.isAnimatingState .animSeq4b {
+  animation: seqFadeUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) 3.4s both;
+}
+
+.isAnimatingState .amberPulseOneTime {
+  animation: softAmberPulseOnce 1.2s ease-in-out 3.8s 1 normal forwards;
+}
+
+.isAnimatingState .animSeq4c {
+  animation: seqFadeUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) 4.2s both;
+}
+
+.isAnimatingState .animSeq5 {
+  animation: seqFadeUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) 4.6s both;
+}
+
+.isAnimatingState .animSeq5b {
+  animation: seqFadeUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) 4.8s both;
+}
+
+.isAnimatingState .animSeq6a {
+  animation: seqFadeUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) 5.1s both;
+}
+
+.isAnimatingState .animSeq6b {
+  animation: seqFadeUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) 5.4s both;
+}
+
+.isAnimatingState .animSeq6c {
+  animation: seqFadeUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) 5.8s both;
+}
+
+.isAnimatingState .animSeq6d {
+  animation: seqFadeUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) 6.2s both;
+}
+
+@media (max-width: 992px) {
+  .diagramGrid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  .dynamicConnectorSvgOverlay {
+    display: none;
+  }
+  .tilesGrid {
+    grid-template-columns: 1fr;
+  }
+}

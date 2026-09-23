@@ -14,6 +14,7 @@ import {
   Settings,
   ShieldCheck,
   X,
+  Box,
 } from "lucide-react";
 
 import { useAuth } from "@/context/AuthContext";
@@ -30,12 +31,17 @@ const navigation = [
         icon: LayoutDashboard,
       },
       {
+        label: "3D Studio",
+        href: "/studio",
+        icon: Box,
+      },
+      {
         label: "Records",
         href: "/records",
         icon: FileText,
       },
       {
-        label: "Documents",
+        label: "Scan Documents",
         href: "/documents",
         icon: Files,
       },

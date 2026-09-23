@@ -10,59 +10,49 @@ import {
   ArrowRight,
   Eye,
   EyeOff,
-  UserRoundCheck,
+  UserCheck,
+  Shield,
 } from "lucide-react";
 
 import { useAuth } from "@/context/AuthContext";
 
 import styles from "./page.module.css";
 
-const DEMO_CREDENTIALS = {
-  email: "officer@bharatvault.gov",
-  password: "BharatVault-Local-2026",
-};
-
 export default function LoginPage() {
   const router = useRouter();
-
   const { login, loading } = useAuth();
 
-  const [email, setEmail] = useState(
-    "officer@bharatvault.gov"
-  );
-
+  const [email, setEmail] = useState("officer@bharatvault.gov");
   const [password, setPassword] = useState("");
-
   const [showPassword, setShowPassword] = useState(false);
-
   const [error, setError] = useState("");
-
-  const [credentialsFilled, setCredentialsFilled] =
-    useState(false);
-
-  function fillDemoCredentials() {
-    setEmail(DEMO_CREDENTIALS.email);
-    setPassword(DEMO_CREDENTIALS.password);
-    setError("");
-    setCredentialsFilled(true);
-  }
 
   async function handleSubmit(event) {
     event.preventDefault();
-
     setError("");
 
     try {
       await login(email, password);
-
       router.push("/dashboard");
     } catch (err) {
       setError(
         err?.message ||
-          "Unable to sign in. Please try again."
+          "Unable to sign in. Please verify backend is running on port 8000."
       );
     }
   }
+
+  const fillOfficerCredentials = () => {
+    setEmail("officer@bharatvault.gov");
+    setPassword("");
+    setError("");
+  };
+
+  const fillAdminCredentials = () => {
+    setEmail("admin@bharatvault.gov");
+    setPassword("");
+    setError("");
+  };
 
   return (
     <main className={styles.page}>
@@ -88,21 +78,69 @@ export default function LoginPage() {
 
             <div>
               <h1>Sign in to Bharat Vault</h1>
-
-              <p>
-                Access your land record verification workspace.
-              </p>
+              <p>Access your land record verification workspace.</p>
             </div>
           </div>
 
-          <form
-            className={styles.form}
-            onSubmit={handleSubmit}
-          >
+          {/* QUICK DEMO AUTOFILL BUTTONS */}
+          <div style={{
+            display: "flex",
+            gap: "10px",
+            marginBottom: "20px",
+            padding: "12px",
+            background: "rgba(37, 99, 235, 0.06)",
+            borderRadius: "10px",
+            border: "1px solid rgba(37, 99, 235, 0.15)"
+          }}>
+            <button
+              type="button"
+              onClick={fillOfficerCredentials}
+              style={{
+                flex: 1,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: "6px",
+                padding: "8px 12px",
+                fontSize: "0.82rem",
+                fontWeight: 600,
+                color: "#2563eb",
+                background: "#eff6ff",
+                border: "1px solid #bfdbfe",
+                borderRadius: "6px",
+                cursor: "pointer"
+              }}
+            >
+              <UserCheck size={14} />
+              Local Officer
+            </button>
+            <button
+              type="button"
+              onClick={fillAdminCredentials}
+              style={{
+                flex: 1,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: "6px",
+                padding: "8px 12px",
+                fontSize: "0.82rem",
+                fontWeight: 600,
+                color: "#475569",
+                background: "#f1f5f9",
+                border: "1px solid #cbd5e1",
+                borderRadius: "6px",
+                cursor: "pointer"
+              }}
+            >
+              <Shield size={14} />
+              Local Admin
+            </button>
+          </div>
+
+          <form className={styles.form} onSubmit={handleSubmit}>
             <div className={styles.field}>
-              <label htmlFor="email">
-                Official email
-              </label>
+              <label htmlFor="email">Official email</label>
 
               <div className={styles.inputWrapper}>
                 <Mail size={17} />
@@ -111,10 +149,8 @@ export default function LoginPage() {
                   id="email"
                   type="email"
                   value={email}
-                  onChange={(event) =>
-                    setEmail(event.target.value)
-                  }
-                  placeholder="officer@example.gov"
+                  onChange={(event) => setEmail(event.target.value)}
+                  placeholder="officer@bharatvault.gov"
                   required
                 />
               </div>
@@ -122,11 +158,8 @@ export default function LoginPage() {
 
             <div className={styles.field}>
               <div className={styles.labelRow}>
-                <label htmlFor="password">
-                  Password
-                </label>
-
-                <span>Local account</span>
+                <label htmlFor="password">Password</label>
+                <span>Demo Account</span>
               </div>
 
               <div className={styles.inputWrapper}>
@@ -134,13 +167,9 @@ export default function LoginPage() {
 
                 <input
                   id="password"
-                  type={
-                    showPassword ? "text" : "password"
-                  }
+                  type={showPassword ? "text" : "password"}
                   value={password}
-                  onChange={(event) =>
-                    setPassword(event.target.value)
-                  }
+                  onChange={(event) => setPassword(event.target.value)}
                   placeholder="Enter your password"
                   required
                 />
@@ -148,29 +177,15 @@ export default function LoginPage() {
                 <button
                   type="button"
                   className={styles.passwordButton}
-                  onClick={() =>
-                    setShowPassword((prev) => !prev)
-                  }
-                  aria-label={
-                    showPassword
-                      ? "Hide password"
-                      : "Show password"
-                  }
+                  onClick={() => setShowPassword((prev) => !prev)}
+                  aria-label={showPassword ? "Hide password" : "Show password"}
                 >
-                  {showPassword ? (
-                    <EyeOff size={17} />
-                  ) : (
-                    <Eye size={17} />
-                  )}
+                  {showPassword ? <EyeOff size={17} /> : <Eye size={17} />}
                 </button>
               </div>
             </div>
 
-            {error && (
-              <div className={styles.error}>
-                {error}
-              </div>
-            )}
+            {error && <div className={styles.error}>{error}</div>}
 
             <button
               type="submit"
@@ -189,36 +204,15 @@ export default function LoginPage() {
           </form>
 
           <div className={styles.demoNotice}>
-            <div className={styles.demoNoticeHeader}>
-              <div>
-                <strong>Local MVP demo account</strong>
-
-                <span>
-                  Fill the demo username and password, then sign in.
-                </span>
-              </div>
-
-              <button
-                type="button"
-                className={styles.demoButton}
-                onClick={fillDemoCredentials}
-              >
-                <UserRoundCheck size={16} />
-                {credentialsFilled
-                  ? "Credentials filled"
-                  : "Fill demo credentials"}
-              </button>
-            </div>
-
-            <small>
-              Documents and OCR stay on this computer. Sample parcels are synthetic.
-            </small>
+            <strong>Local sign in</strong>
+            <span>
+              Choose an account above and enter its configured local password.
+            </span>
           </div>
         </section>
 
         <p className={styles.footerText}>
-          Bharat Vault · Evidence-driven land record
-          intelligence
+          Bharat Vault · Evidence-driven land record intelligence
         </p>
       </div>
     </main>

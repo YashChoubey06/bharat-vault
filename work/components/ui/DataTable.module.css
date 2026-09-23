@@ -1,0 +1,111 @@
+.tableCard {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+  width: 100%;
+}
+
+.tableWrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.table th {
+  padding: 14px 20px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-subtle);
+  background: #fafafa;
+  border-bottom: 1px solid var(--border-subtle);
+  white-space: nowrap;
+}
+
+.table td {
+  padding: 16px 20px;
+  font-size: 13px;
+  color: var(--text-main);
+  border-bottom: 1px solid var(--border-light);
+  vertical-align: middle;
+}
+
+.table tbody tr {
+  transition: background var(--transition-fast);
+}
+
+.table tbody tr:hover {
+  background: var(--bg-app);
+}
+
+.table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* Status & Risk Badges */
+.statusBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.3;
+  white-space: nowrap;
+}
+
+.statusBadge.emerald {
+  background: var(--badge-emerald-bg);
+  color: var(--badge-emerald-text);
+  border: 1px solid var(--badge-emerald-border);
+}
+
+.statusBadge.amber {
+  background: var(--badge-amber-bg);
+  color: var(--badge-amber-text);
+  border: 1px solid var(--badge-amber-border);
+}
+
+.statusBadge.rose {
+  background: var(--badge-rose-bg);
+  color: var(--badge-rose-text);
+  border: 1px solid var(--badge-rose-border);
+}
+
+/* Linear Progress Indicator Track */
+.progressTrack {
+  width: 100%;
+  max-width: 160px;
+  height: 8px;
+  background: #f1f5f9;
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.progressBar {
+  height: 100%;
+  background: var(--brand-600);
+  border-radius: var(--radius-full);
+  transition: width 600ms ease;
+}
+
+.progressBar.emerald {
+  background: #10b981;
+}
+
+.progressBar.amber {
+  background: #f59e0b;
+}
+
+.progressBar.rose {
+  background: #ef4444;
+}
