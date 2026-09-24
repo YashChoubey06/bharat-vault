@@ -81,7 +81,7 @@ export default function DocumentUploadPage() {
     if (!parcelId || !selectedFiles.length) {
       setError("Select a parcel and at least one file."); return;
     }
-    setError(""); setIsProcessing(true); setIsComplete(false); setCurrentStepIndex(0);
+    setOverallProgress(0); setError(""); setIsProcessing(true); setIsComplete(false); setCurrentStepIndex(0);
     const uploaded = [];
     try {
       for (const item of selectedFiles) {
@@ -94,12 +94,17 @@ export default function DocumentUploadPage() {
       setCurrentStepIndex(2);
       for (let attempt = 0; attempt < 150; attempt++) {
         const docs = await Promise.all(uploaded.map(d => getDocumentById(d.id)));
-        setDocumentRows(docs.map(d => ({name: d.fileName, ocr: d.ocrStatus === "COMPLETED" ? "DONE" : "ACTIVE",
-          extraction: d.ocrStatus === "COMPLETED" ? "DONE" : "PENDING", validation: "PENDING", status: d.ocrStatus})));
-        const complete = docs.filter(d => d.ocrStatus === "COMPLETED").length;
+        setDocumentRows(docs.map(d => ({name: d.fileName, ocr: ["COMPLETED", "REVIEW_REQUIRED"].includes(d.ocrStatus) ? "DONE" : d.ocrStatus === "FAILED" ? "PENDING" : "ACTIVE",
+          extraction: d.ocrStatus === "COMPLETED" ? "DONE" : "PENDING", validation: "PENDING", status: ({COMPLETED:"Completed", REVIEW_REQUIRED:"Requires Review", FAILED:"Failed"})[d.ocrStatus] || d.ocrStatus})));
+        const complete = docs.filter(d => ["COMPLETED", "REVIEW_REQUIRED"].includes(d.ocrStatus)).length;
         setOverallProgress(Math.round(100 * complete / docs.length));
         if (docs.some(d => d.ocrStatus === "FAILED")) throw new Error("Processing failed. Open Documents to inspect and retry the failed upload.");
-        if (complete === docs.length) { setCurrentStepIndex(5); setIsComplete(true); return; }
+        if (complete === docs.length) {
+          if (docs.some(d => d.ocrStatus === "REVIEW_REQUIRED")) {
+            setError("OCR finished, but no supported fields could be extracted from one or more files. Open the parcel evidence to review the text, or upload a clearer, higher-resolution scan.");
+          }
+          setCurrentStepIndex(5); setIsComplete(true); return;
+        }
         await new Promise(resolve => setTimeout(resolve, 2000));
       }
       setError("Files are saved and still processing. Check their status in Documents.");

@@ -1,6 +1,7 @@
 param([switch]$Dev, [switch]$Wait)
 $ErrorActionPreference = 'Stop'
 $projectRoot = $PSScriptRoot
+$frontendRoot = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '../frontend-new'))
 $runtimeDir = Join-Path $projectRoot 'backend/data/runtime'
 $pythonPath = Join-Path $projectRoot 'backend/.venv/Scripts/python.exe'
 $nodePath = (Get-Command node -ErrorAction Stop).Source
@@ -19,12 +20,12 @@ if (Test-Path -LiteralPath (Join-Path $projectRoot 'backend/data/postgresql/PG_V
 foreach ($port in @(8000, 3003)) {
     if (Get-LocalListener $port) { throw "Port $port is in use. Stop the existing project server before starting another." }
 }
-if (!$Dev -and !(Test-Path -LiteralPath (Join-Path $projectRoot '.next/BUILD_ID'))) { throw 'Build the frontend first: node node_modules/next/dist/bin/next build --turbopack' }
+if (!$Dev -and !(Test-Path -LiteralPath (Join-Path $frontendRoot '.next/BUILD_ID'))) { throw 'Build the frontend first: node node_modules/next/dist/bin/next build --turbopack' }
 New-Item -ItemType Directory -Path $runtimeDir -Force | Out-Null
 $backend = Start-Process -FilePath $pythonPath -ArgumentList '-m uvicorn backend.main:app --host 127.0.0.1 --port 8000' -WorkingDirectory $projectRoot -WindowStyle Hidden -RedirectStandardOutput (Join-Path $runtimeDir 'backend.log') -RedirectStandardError (Join-Path $runtimeDir 'backend-error.log') -PassThru
-$nextScript = Join-Path $projectRoot 'node_modules/next/dist/bin/next'
+$nextScript = Join-Path $frontendRoot 'node_modules/next/dist/bin/next'
 $nextMode = if ($Dev) { 'dev --turbopack' } else { 'start' }
-$frontend = Start-Process -FilePath $nodePath -ArgumentList "`"$nextScript`" $nextMode --hostname 127.0.0.1 --port 3003" -WorkingDirectory $projectRoot -WindowStyle Hidden -RedirectStandardOutput (Join-Path $runtimeDir 'frontend.log') -RedirectStandardError (Join-Path $runtimeDir 'frontend-error.log') -PassThru
+$frontend = Start-Process -FilePath $nodePath -ArgumentList "`"$nextScript`" $nextMode --hostname 127.0.0.1 --port 3003" -WorkingDirectory $frontendRoot -WindowStyle Hidden -RedirectStandardOutput (Join-Path $runtimeDir 'frontend.log') -RedirectStandardError (Join-Path $runtimeDir 'frontend-error.log') -PassThru
 $records = @()
 foreach ($pair in @(@{port=8000; launcher=$backend}, @{port=3003; launcher=$frontend})) {
     $listenerId = $null
