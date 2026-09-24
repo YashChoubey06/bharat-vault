@@ -1,7 +1,7 @@
 $ErrorActionPreference = 'Stop'
 $manifest = Join-Path $PSScriptRoot 'backend/data/runtime/processes.json'
 if (!(Test-Path -LiteralPath $manifest)) { Write-Output 'No managed server processes recorded.'; exit }
-$records = @(Get-Content -LiteralPath $manifest -Raw | ConvertFrom-Json)
+$records = @(Get-Content -LiteralPath $manifest -Raw | ConvertFrom-Json | ForEach-Object { $_ })
 foreach ($record in $records) {
     $process = Get-Process -Id $record.pid -ErrorAction SilentlyContinue
     if ($process -and $process.Path -eq $record.executable -and $process.StartTime.ToUniversalTime().Ticks -eq [long]$record.startTicks) {

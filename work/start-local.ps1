@@ -1,4 +1,4 @@
-param([switch]$Dev)
+param([switch]$Dev, [switch]$Wait)
 $ErrorActionPreference = 'Stop'
 $projectRoot = $PSScriptRoot
 $runtimeDir = Join-Path $projectRoot 'backend/data/runtime'
@@ -40,3 +40,6 @@ foreach ($pair in @(@{port=8000; launcher=$backend}, @{port=3003; launcher=$fron
 }
 $records | ConvertTo-Json | Set-Content -LiteralPath (Join-Path $runtimeDir 'processes.json')
 Write-Output 'Bharat Vault is ready at http://localhost:3003. Logs: backend/data/runtime. Stop with ./stop-local.ps1.'
+if ($Wait) {
+    Wait-Process -Id $backend.Id, $frontend.Id
+}
