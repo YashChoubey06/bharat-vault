@@ -65,28 +65,28 @@ By orchestrating **local bilingual Computer Vision (OCR)**, **deterministic cros
 
 ```mermaid
 flowchart TD
-    subgraph UI ["Modern Frontend Layer (Next.js 15 + Turbopack)"]
-        A[Parcel Registry & Dashboard] --> B[Interactive Evidence Viewer]
-        B --> C[3D Cadastral Studio (Mapbox GL)]
-        C --> D[HITL Adjudication & Risk Queue]
+    subgraph UI["Modern Frontend Layer (Next.js 15 + Turbopack)"]
+        A["Parcel Registry & Dashboard"] --> B["Interactive Evidence Viewer"]
+        B --> C["3D Cadastral Studio (Mapbox GL)"]
+        C --> D["HITL Adjudication & Risk Queue"]
     end
 
-    subgraph Core ["Sovereign Backend (FastAPI + Async Worker)"]
-        E[API Gateway & RBAC Guard] --> F[Durable Bilingual OCR Pipeline]
-        F --> G[Canonical Claims & Normalizer]
-        G --> H[Evidence Resolution Planner]
-        H --> I[Cross-Source Corroboration Engine]
+    subgraph Core["Sovereign Backend (FastAPI + Async Worker)"]
+        E["API Gateway & RBAC Guard"] --> F["Durable Bilingual OCR Pipeline"]
+        F --> G["Canonical Claims & Normalizer"]
+        G --> H["Evidence Resolution Planner"]
+        H --> I["Cross-Source Corroboration Engine"]
     end
 
-    subgraph Data ["Immutable Persistence Layer (PostgreSQL 17)"]
-        J[(Source Records & Raw Payloads)]
-        K[(Canonical Typed Claims)]
-        L[(Hash-Linked Audit Chain)]
-        M[(Spatial Parcel Geometry)]
+    subgraph Data["Immutable Persistence Layer (PostgreSQL 17)"]
+        J[("Source Records & Raw Payloads")]
+        K[("Canonical Typed Claims")]
+        L[("Hash-Linked Audit Chain")]
+        M[("Spatial Parcel Geometry")]
     end
 
-    UI <===>|Secure HttpOnly Cookies / REST API| Core
-    Core <===>|SQLAlchemy 2.0 ORM & Alembic| Data
+    UI <-->|Secure HttpOnly Cookies / REST API| Core
+    Core <-->|SQLAlchemy 2.0 ORM & Alembic| Data
 ```
 
 ---
@@ -199,8 +199,6 @@ pnpm build
 
 ---
 
-## 🤝 Contributing & License
+## 🤝 Contributing
 
 Contributions are welcome! Please submit PRs with matching test suites and ensure all cryptographic and evidence constraints pass validation.
-
-Distributed under the **MIT License**. Built with pride for Sovereign Digital Governance.
