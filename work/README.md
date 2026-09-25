@@ -1,3 +1,8 @@
 # Bharat Vault
 
-See [Frontend integration](FRONTEND_INTEGRATION.md) for frontend setup and [Local MVP](LOCAL_MVP.md) for backend setup and accounts.
+For project overview, architecture, and features, see the [Main Project README](../README.md).
+
+### Technical Documentation & Guides
+- [Frontend Integration Guide](FRONTEND_INTEGRATION.md)
+- [Local MVP & Backend Setup](LOCAL_MVP.md)
+- [Evidence Resolution Engine Architecture](EVIDENCE_RESOLUTION.md)
