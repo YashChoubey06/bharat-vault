@@ -1,0 +1,175 @@
+.page { max-width: 1500px; margin: 0 auto; padding: 24px 28px; }
+
+/* ── Header ──────────────────────────────────── */
+.header { display: flex; justify-content: space-between; align-items: flex-start; gap: 20px; margin-bottom: 22px; }
+
+
+
+.header h1 { margin: 0 0 5px; font-size: 22px; font-weight: 700; letter-spacing: -.01em; color: var(--text-main); }
+
+.header p { margin: 0; color: var(--text-muted); font-size: 13px; line-height: 1.55; }
+
+.refreshButton {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 7px 14px; border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-full); background: var(--bg-surface);
+  color: var(--text-main); font-size: 12px; font-weight: 600; cursor: pointer;
+  transition: all var(--transition-fast); box-shadow: var(--shadow-sm);
+}
+.refreshButton:hover { border-color: var(--brand-500); color: var(--brand-600); }
+.refreshButton:disabled { opacity: 0.6; cursor: not-allowed; }
+.spinning { animation: spin .8s linear infinite; }
+
+/* ── Stats ───────────────────────────────────── */
+.statsGrid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 20px; }
+
+
+
+/* ── Main Card ───────────────────────────────── */
+.mainCard {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+/* ── Toolbar ─────────────────────────────────── */
+.toolbar {
+  display: flex; justify-content: space-between; gap: 12px;
+  padding: 14px; border-bottom: 1px solid var(--border-subtle);
+}
+
+.searchBox {
+  width: min(440px, 100%); height: 36px;
+  display: flex; align-items: center; gap: 8px; padding: 0 12px;
+  border: 1px solid var(--border-subtle); border-radius: var(--radius-full);
+  background: var(--bg-subtle); color: var(--text-muted);
+  transition: all var(--transition-fast);
+}
+.searchBox:focus-within { border-color: var(--brand-500); background: var(--bg-surface); box-shadow: var(--shadow-focus); }
+.searchBox input { width: 100%; border: 0; outline: 0; background: transparent; color: var(--text-main); font: inherit; font-size: 12px; }
+.searchBox input::placeholder { color: var(--text-subtle); }
+
+.filters { display: flex; gap: 8px; }
+
+.filterControl, .statusSelect {
+  height: 36px; display: flex; align-items: center; gap: 6px; padding: 0 10px;
+  border: 1px solid var(--border-subtle); border-radius: var(--radius-full);
+  background: var(--bg-surface); color: var(--text-muted); font-size: 11px;
+  transition: border-color var(--transition-fast);
+}
+.filterControl:hover, .statusSelect:hover { border-color: #bdc1c6; }
+
+.filterControl select, .statusSelect {
+  border: 0; outline: 0; background: transparent;
+  color: var(--text-main); font: inherit; font-size: 11px; cursor: pointer;
+}
+
+/* ── Table ───────────────────────────────────── */
+.tableWrapper { width: 100%; overflow-x: auto; }
+
+.table { width: 100%; border-collapse: collapse; min-width: 1000px; }
+
+.table th {
+  padding: 11px 15px; text-align: left; background: var(--bg-subtle);
+  border-bottom: 1px solid var(--border-subtle); color: var(--text-subtle);
+  font-size: 10px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+}
+
+.table td { padding: 13px 15px; border-bottom: 1px solid var(--border-light); vertical-align: middle; }
+.table tbody tr:last-child td { border-bottom: 0; }
+.table tbody tr:hover { background: var(--bg-subtle); }
+
+/* ── Cells ───────────────────────────────────── */
+.caseCell strong { display: block; font-size: 12px; margin-bottom: 3px; color: var(--text-main); }
+.caseCell span   { color: var(--text-subtle); font-size: 10px; }
+
+.parcelCell { display: flex; align-items: center; gap: 8px; }
+.parcelCell > svg { color: var(--brand-600); flex-shrink: 0; }
+
+.parcelCell strong, .officerCell strong { display: block; font-size: 12px; color: var(--text-main); }
+.parcelCell span, .officerCell span     { display: block; margin-top: 3px; color: var(--text-muted); font-size: 10px; }
+
+.reasonCell { max-width: 220px; }
+.reasonCell span { color: var(--text-muted); font-size: 11px; line-height: 1.45; }
+
+.officerCell { display: flex; align-items: center; gap: 8px; }
+
+.avatar {
+  width: 28px; height: 28px; display: flex; align-items: center; justify-content: center;
+  border-radius: 50%; background: var(--brand-50); color: var(--brand-600);
+  border: 1px solid var(--brand-100); flex-shrink: 0; font-size: 11px; font-weight: 700;
+}
+
+.unassigned { color: var(--text-subtle); font-size: 11px; }
+
+/* ── Badges ──────────────────────────────────── */
+.riskBadge {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 3px 8px; border-radius: var(--radius-full);
+  font-size: 10px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase;
+}
+.riskBadge > span { width: 5px; height: 5px; border-radius: 50%; background: currentColor; }
+
+.risk_critical { background: var(--badge-rose-bg);    color: var(--badge-rose-text);    border: 1px solid var(--badge-rose-border);    }
+.risk_high     { background: var(--badge-amber-bg);   color: var(--badge-amber-text);   border: 1px solid var(--badge-amber-border);   }
+.risk_medium   { background: var(--badge-amber-bg);   color: var(--badge-amber-text);   border: 1px solid var(--badge-amber-border);   }
+.risk_low      { background: var(--badge-emerald-bg); color: var(--badge-emerald-text); border: 1px solid var(--badge-emerald-border); }
+
+.statusBadge {
+  display: inline-flex; padding: 3px 8px; border-radius: var(--radius-full);
+  font-size: 10px; font-weight: 700; white-space: nowrap; letter-spacing: .04em; text-transform: uppercase;
+}
+
+.statusPending  { background: var(--badge-amber-bg);   color: var(--badge-amber-text);   border: 1px solid var(--badge-amber-border);   }
+.statusVerified { background: var(--badge-emerald-bg); color: var(--badge-emerald-text); border: 1px solid var(--badge-emerald-border); }
+.statusRejected { background: var(--badge-rose-bg);    color: var(--badge-rose-text);    border: 1px solid var(--badge-rose-border);    }
+
+/* ── Open button ─────────────────────────────── */
+.openButton {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 5px 12px; border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-full); background: var(--bg-surface);
+  color: var(--text-main); font-size: 11px; font-weight: 600; cursor: pointer;
+  transition: all var(--transition-fast);
+}
+.openButton:hover { border-color: var(--brand-500); color: var(--brand-600); }
+
+
+
+/* ── States ──────────────────────────────────── */
+.loading { min-height: 260px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--text-muted); }
+.loading p { margin-top: 10px; font-size: 12px; }
+
+.spinner { width: 22px; height: 22px; border: 2.5px solid var(--border-subtle); border-top-color: var(--brand-500); border-radius: 50%; animation: spin .7s linear infinite; }
+
+.empty { min-height: 260px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--text-muted); text-align: center; }
+.empty h3 { margin: 10px 0 4px; color: var(--text-main); font-size: 14px; font-weight: 600; }
+.empty p  { margin: 0 0 14px; font-size: 12px; }
+.empty button {
+  padding: 6px 14px; border: 1px solid var(--border-subtle); border-radius: var(--radius-full);
+  background: var(--bg-surface); color: var(--brand-600); font: inherit; font-size: 12px; font-weight: 600; cursor: pointer;
+  transition: all var(--transition-fast);
+}
+.empty button:hover { background: var(--brand-50); border-color: var(--brand-100); }
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── Responsive ──────────────────────────────── */
+@media (max-width: 1000px) {
+  .statsGrid { grid-template-columns: repeat(2, 1fr); }
+  .toolbar   { flex-direction: column; }
+  .searchBox { width: 100%; }
+  .filters   { justify-content: flex-start; }
+}
+
+@media (max-width: 650px) {
+  .page { padding: 17px; }
+  .header { flex-direction: column; }
+  .header h1 { font-size: 20px; }
+  .statsGrid { grid-template-columns: 1fr; }
+  .filters { flex-direction: column; }
+  .filterControl, .statusSelect { width: 100%; }
+
+}

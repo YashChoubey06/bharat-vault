@@ -1,0 +1,20 @@
+/* ── Shell wrapper ───────────────────────────────── */
+.shell {
+  min-height: 100vh;
+  background: var(--bg-app);
+}
+
+.main {
+  min-height: 100vh;
+  margin-left: 72px; /* matches collapsed sidebar width */
+  padding: calc(var(--header-height) + 28px) 32px 40px;
+  background: var(--bg-app);
+  box-sizing: border-box;
+}
+
+@media (max-width: 900px) {
+  .main {
+    margin-left: 0;
+    padding: calc(var(--header-height) + 20px) 18px 28px;
+  }
+}

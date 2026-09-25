@@ -1,0 +1,110 @@
+.statCard {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-fast);
+}
+
+.statCard.actionable {
+  cursor: pointer;
+}
+
+.statCard.actionable:hover {
+  box-shadow: var(--shadow-md);
+  border-color: #cbd5e1;
+  transform: translateY(-1px);
+}
+
+.statCard.actionable:active {
+  transform: translateY(0);
+}
+
+/* ── Header: Icon + Label ──────────────── */
+.cardHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.iconWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: var(--radius-sm);
+  flex-shrink: 0;
+}
+
+.label {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-muted);
+  line-height: 1.2;
+}
+
+/* ── Value ─────────────────────────────── */
+.valueGroup {
+  margin-top: 4px;
+}
+
+.value {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text-main);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+
+/* ── Footer: Subtext ───────────────────── */
+.footer {
+  margin-top: 4px;
+  display: flex;
+  align-items: center;
+}
+
+.subtext {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-subtle);
+}
+
+/* ── Semantic Variants ─────────────────── */
+
+/* Neutral / Default */
+.statCard.neutral .iconWrapper {
+  background: var(--bg-subtle);
+  color: var(--text-muted);
+}
+
+/* Success */
+.statCard.success .iconWrapper {
+  background: var(--badge-emerald-bg);
+  color: var(--badge-emerald-text);
+}
+
+/* Warning */
+.statCard.warning .iconWrapper {
+  background: var(--badge-amber-bg);
+  color: var(--badge-amber-text);
+}
+.statCard.warning .value {
+  color: var(--badge-amber-text);
+}
+
+/* Critical */
+.statCard.critical {
+  border-color: var(--badge-rose-border);
+}
+.statCard.critical .iconWrapper {
+  background: var(--badge-rose-bg);
+  color: var(--badge-rose-text);
+}
+.statCard.critical .value {
+  color: var(--badge-rose-text);
+}

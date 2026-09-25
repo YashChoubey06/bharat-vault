@@ -1,0 +1,194 @@
+.page { width: 100%; max-width: 1500px; margin: 0 auto; padding: 24px 28px 60px; }
+
+/* ── State ───────────────────────────────────── */
+.state {
+  min-height: 60vh; display: flex; align-items: center; justify-content: center;
+  gap: 10px; color: var(--text-muted);
+}
+.state button {
+  border: 1px solid var(--border-subtle); background: var(--bg-surface);
+  color: var(--text-main); border-radius: var(--radius-full);
+  padding: 7px 14px; cursor: pointer; font-size: 12px; font-weight: 600;
+  transition: all var(--transition-fast);
+}
+.state button:hover { background: var(--brand-50); border-color: var(--brand-100); color: var(--brand-600); }
+
+/* ── Back ────────────────────────────────────── */
+.backButton {
+  display: inline-flex; align-items: center; gap: 7px;
+  border: 0; background: transparent; color: var(--text-muted);
+  padding: 0; margin-bottom: 22px; cursor: pointer; font-size: 12px;
+  transition: color var(--transition-fast);
+}
+.backButton:hover { color: var(--text-main); }
+
+/* ── Header ──────────────────────────────────── */
+.header { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; margin-bottom: 22px; }
+
+
+
+.titleRow { display: flex; align-items: center; gap: 12px; }
+.titleRow h1 { margin: 0; font-size: 22px; font-weight: 700; line-height: 1.15; color: var(--text-main); letter-spacing: -.01em; }
+
+.header p { margin: 6px 0 0; font-size: 12px; color: var(--text-muted); }
+
+.riskBox {
+  min-width: 135px; padding: 13px 16px;
+  border: 1px solid var(--border-subtle); background: var(--bg-surface);
+  border-radius: var(--radius-md); text-align: right;
+  cursor: pointer; box-shadow: var(--shadow-sm);
+  transition: all var(--transition-fast);
+}
+.riskBox:hover { border-color: var(--brand-500); box-shadow: var(--shadow-hover); }
+.riskBox span   { display: block; font-size: 10px; color: var(--text-subtle); text-transform: uppercase; letter-spacing: .07em; }
+.riskBox strong { display: inline-block; margin-top: 3px; font-size: 24px; font-weight: 700; color: var(--text-main); }
+.riskBox small  { display: block; margin-top: 2px; font-size: 9px; font-weight: 700; color: var(--text-muted); letter-spacing: .07em; }
+
+/* ── Summary ─────────────────────────────────── */
+.summaryGrid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 18px; }
+
+/* ── Assessment Card ─────────────────────────── */
+.assessmentCard {
+  display: flex; gap: 16px; padding: 18px; margin-bottom: 18px;
+  border: 1px solid var(--border-subtle); border-radius: var(--radius-md);
+  background: var(--bg-surface); box-shadow: var(--shadow-sm);
+}
+.assessmentIcon {
+  width: 40px; height: 40px; flex: 0 0 40px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: var(--radius-sm); background: var(--badge-amber-bg); color: var(--badge-amber-text);
+}
+.assessmentContent { flex: 1; }
+.assessmentHeader { display: flex; align-items: flex-start; justify-content: space-between; gap: 18px; }
+
+.assessmentHeader h2 { margin: 4px 0 0; font-size: 15px; font-weight: 700; color: var(--text-main); }
+.assessmentContent > p { max-width: 800px; margin: 9px 0 0; font-size: 12px; line-height: 1.65; color: var(--text-muted); }
+.confidence { white-space: nowrap; font-size: 11px; color: var(--text-muted); }
+.confidence strong { color: var(--text-main); }
+
+/* ── Cards ───────────────────────────────────── */
+.card {
+  margin-bottom: 18px; padding: 18px;
+  border: 1px solid var(--border-subtle); border-radius: var(--radius-md);
+  background: var(--bg-surface); box-shadow: var(--shadow-sm);
+}
+.cardHeader {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  gap: 18px; padding-bottom: 14px; border-bottom: 1px solid var(--border-light);
+}
+.cardHeader h2   { margin: 0; font-size: 14px; font-weight: 700; color: var(--text-main); }
+.cardHeader p    { margin: 4px 0 0; font-size: 11px; color: var(--text-muted); }
+.cardHeader > svg{ color: var(--text-subtle); }
+
+/* ── Check List ──────────────────────────────── */
+.checkList { display: flex; flex-direction: column; }
+
+.checkRow { display: flex; gap: 13px; padding: 15px 2px; border-bottom: 1px solid var(--border-light); }
+.checkRow:last-child { border-bottom: 0; }
+
+.checkIconSuccess, .checkIconWarning {
+  width: 28px; height: 28px; flex: 0 0 28px;
+  display: flex; align-items: center; justify-content: center; border-radius: 50%;
+}
+.checkIconSuccess { color: var(--badge-emerald-text); background: var(--badge-emerald-bg); }
+.checkIconWarning { color: var(--badge-amber-text);   background: var(--badge-amber-bg);   }
+
+.checkMain { flex: 1; min-width: 0; }
+.checkTitle { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.checkTitle strong { font-size: 13px; font-weight: 600; color: var(--text-main); }
+.checkMain p { margin: 5px 0 0; font-size: 11px; line-height: 1.6; color: var(--text-muted); }
+
+.checkMeta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 8px; }
+.checkMeta span   { font-size: 10px; color: var(--text-subtle); }
+.checkMeta strong { color: var(--text-muted); }
+
+/* ── Status Badge ────────────────────────────── */
+.statusBadge {
+  display: inline-flex; align-items: center; gap: 4px;
+  flex-shrink: 0; padding: 3px 8px; border-radius: var(--radius-full);
+  font-size: 10px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase;
+}
+.statusPASSED         { background: var(--badge-emerald-bg); color: var(--badge-emerald-text); border: 1px solid var(--badge-emerald-border); }
+.statusWARNING,
+.statusREVIEWREQUIRED,
+.statusFAIL           { background: var(--badge-amber-bg);   color: var(--badge-amber-text);   border: 1px solid var(--badge-amber-border);   }
+.statusPENDING        { background: var(--bg-subtle);        color: var(--text-muted);         border: 1px solid var(--border-subtle);        }
+.statusUNKNOWN        { background: var(--bg-subtle);        color: var(--text-subtle);        border: 1px solid var(--border-subtle);        }
+
+/* ── Conflicts ───────────────────────────────── */
+.conflictList { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; padding-top: 14px; }
+
+.conflictCard { padding: 14px; border: 1px solid var(--border-subtle); border-radius: var(--radius-md); background: var(--bg-subtle); }
+.conflictHeader { display: flex; align-items: center; gap: 10px; }
+.conflictIcon { width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; border-radius: var(--radius-sm); color: var(--badge-amber-text); background: var(--badge-amber-bg); }
+.conflictHeader > div:nth-child(2) { flex: 1; }
+.conflictHeader strong { display: block; font-size: 13px; color: var(--text-main); }
+.conflictHeader span   { display: block; margin-top: 2px; font-size: 10px; color: var(--text-subtle); }
+.severity { padding: 3px 6px; border-radius: var(--radius-sm); font-size: 9px !important; font-weight: 700; text-transform: uppercase; color: var(--badge-amber-text) !important; background: var(--badge-amber-bg); border: 1px solid var(--badge-amber-border); }
+.conflictCard > p { margin: 12px 0; font-size: 11px; line-height: 1.6; color: var(--text-muted); }
+
+.conflictValues { display: flex; align-items: center; gap: 8px; }
+.conflictValue { flex: 1; min-width: 0; padding: 9px; border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); background: var(--bg-surface); }
+.conflictValue span   { display: block; font-size: 9px; color: var(--text-subtle); text-transform: uppercase; }
+.conflictValue strong { display: block; margin-top: 2px; font-size: 12px; font-weight: 700; color: var(--text-main); }
+.conflictArrow { font-size: 15px; font-weight: 700; color: var(--badge-amber-text); }
+
+.noConflict { display: flex; align-items: center; gap: 11px; padding: 16px 2px 2px; color: var(--badge-emerald-text); }
+.noConflict strong { display: block; font-size: 13px; color: var(--text-main); }
+.noConflict span   { display: block; margin-top: 2px; font-size: 11px; color: var(--text-muted); }
+
+/* ── Risk Factors ────────────────────────────── */
+.riskFactors { padding-top: 8px; }
+.riskFactor {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 18px; padding: 14px 2px; border-bottom: 1px solid var(--border-light);
+}
+.riskFactor:last-child { border-bottom: 0; }
+.riskFactor > div:first-child { min-width: 170px; }
+.riskFactor span  { display: block; font-size: 13px; font-weight: 600; color: var(--text-main); }
+.riskFactor small { display: block; margin-top: 3px; font-size: 10px; color: var(--text-muted); }
+
+.impact { display: flex; align-items: center; gap: 10px; width: 280px; }
+.impactBar { flex: 1; height: 5px; overflow: hidden; border-radius: var(--radius-full); background: var(--border-subtle); }
+.impactBar span { display: block; height: 100%; border-radius: inherit; background: var(--badge-amber-text); }
+.impact strong { min-width: 32px; text-align: right; font-size: 11px; color: var(--text-main); }
+
+/* ── Action Card ─────────────────────────────── */
+.actionCard {
+  display: flex; align-items: center; gap: 14px; padding: 16px 18px; margin-bottom: 18px;
+  border: 1px solid var(--border-subtle); border-radius: var(--radius-md);
+  background: var(--bg-surface); box-shadow: var(--shadow-sm);
+}
+.actionIcon { width: 38px; height: 38px; flex: 0 0 38px; display: flex; align-items: center; justify-content: center; border-radius: var(--radius-sm); color: var(--badge-amber-text); background: var(--badge-amber-bg); }
+.actionContent { flex: 1; }
+.actionContent h2 { margin: 3px 0; font-size: 14px; font-weight: 700; color: var(--text-main); }
+.actionContent p  { margin: 0; max-width: 700px; font-size: 11px; line-height: 1.6; color: var(--text-muted); }
+.reviewButton {
+  border: 0; border-radius: var(--radius-full); padding: 9px 16px;
+  cursor: pointer; background: var(--text-main); color: var(--bg-surface);
+  font: inherit; font-size: 12px; font-weight: 700; white-space: nowrap;
+  transition: opacity var(--transition-fast);
+}
+.reviewButton:hover { opacity: .88; }
+
+
+.empty { padding: 24px 2px; text-align: center; font-size: 12px; color: var(--text-subtle); }
+
+/* ── Responsive ──────────────────────────────── */
+@media (max-width: 1000px) { .summaryGrid { grid-template-columns: repeat(2, 1fr); } .conflictList { grid-template-columns: 1fr; } .impact { width: 200px; } }
+@media (max-width: 700px) {
+  .page { padding: 18px 14px 44px; }
+  .header { align-items: flex-start; flex-direction: column; }
+  .riskBox { width: 100%; text-align: left; }
+  .summaryGrid { grid-template-columns: 1fr 1fr; }
+  .assessmentHeader { flex-direction: column; }
+  .confidence { white-space: normal; }
+  .checkTitle { align-items: flex-start; flex-direction: column; }
+  .conflictValues { flex-direction: column; align-items: stretch; }
+  .conflictArrow { text-align: center; }
+  .riskFactor { align-items: flex-start; flex-direction: column; }
+  .impact { width: 100%; }
+  .actionCard { align-items: flex-start; flex-direction: column; }
+  .reviewButton { width: 100%; }
+}
+@media (max-width: 450px) { .summaryGrid { grid-template-columns: 1fr; } .titleRow { align-items: flex-start; flex-direction: column; } }

@@ -1,0 +1,69 @@
+:root {
+  /* ── Surfaces ─────────────────────────────────────────── */
+  --bg-app:     #f8f9fa;
+  --bg-surface: #ffffff;
+  --bg-subtle:  #f1f3f4;
+
+  /* ── Borders ──────────────────────────────────────────── */
+  --border-subtle: #e0e0e0;
+  --border-light:  #f1f3f4;
+
+  /* ── Text ─────────────────────────────────────────────── */
+  --text-main:   #202124;
+  --text-muted:  #5f6368;
+  --text-subtle: #9aa0a6;
+
+  /* ── Brand (Google Blue) ──────────────────────────────── */
+  --brand-50:  #e8f0fe;
+  --brand-100: #d2e3fc;
+  --brand-500: #1a73e8;
+  --brand-600: #1a73e8;
+  --brand-700: #1557b0;
+  --brand-gradient: linear-gradient(135deg, #1a73e8 0%, #1557b0 100%);
+
+  /* ── Status ───────────────────────────────────────────── */
+  --badge-emerald-bg:     #e6f4ea;
+  --badge-emerald-text:   #137333;
+  --badge-emerald-border: #ceead6;
+
+  --badge-amber-bg:     #fef7e0;
+  --badge-amber-text:   #b06000;
+  --badge-amber-border: #feefc3;
+
+  --badge-rose-bg:     #fce8e6;
+  --badge-rose-text:   #c5221f;
+  --badge-rose-border: #fad2cf;
+
+  /* ── Geometry ─────────────────────────────────────────── */
+  --radius-sm:   6px;
+  --radius-md:   10px;
+  --radius-lg:   14px;
+  --radius-full: 9999px;
+
+  --shadow-sm:    0 1px 2px rgba(60,64,67,.10), 0 1px 3px 1px rgba(60,64,67,.06);
+  --shadow-card:  0 1px 3px rgba(60,64,67,.12), 0 1px 2px rgba(60,64,67,.08);
+  --shadow-hover: 0 4px 12px rgba(60,64,67,.18);
+  --shadow-focus: 0 0 0 3px rgba(26,115,232,.25);
+
+  /* ── Legacy aliases ───────────────────────────────────── */
+  --color-primary:          var(--brand-600);
+  --color-primary-dark:     var(--brand-700);
+  --color-background:       var(--bg-app);
+  --color-surface:          var(--bg-surface);
+  --color-text:             var(--text-main);
+  --color-text-primary:     var(--text-main);
+  --color-text-secondary:   var(--text-muted);
+  --color-text-muted:       var(--text-subtle);
+  --color-border:           var(--border-subtle);
+  --color-success:  #137333;
+  --color-warning:  #b06000;
+  --color-danger:   #c5221f;
+
+  /* ── Layout ───────────────────────────────────────────── */
+  --sidebar-width: 248px;
+  --header-height: 64px;
+
+  /* ── Motion ───────────────────────────────────────────── */
+  --transition-fast:   150ms cubic-bezier(.4,0,.2,1);
+  --transition-normal: 250ms cubic-bezier(.4,0,.2,1);
+}

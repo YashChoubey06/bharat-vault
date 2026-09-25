@@ -1,0 +1,165 @@
+.page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  padding: 40px 20px;
+  background: var(--bg-app);
+}
+
+.backgroundGrid {
+  position: absolute;
+  inset: 0;
+  opacity: 0.4;
+  background-image:
+    linear-gradient(var(--border-subtle) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border-subtle) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+.container {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 420px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ── Brand ─────────────────────────────────── */
+.brand { display: flex; align-items: center; gap: 10px; margin-bottom: 28px; }
+
+.brandIcon {
+  width: 36px; height: 36px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: var(--radius-sm);
+  background: var(--brand-gradient);
+  color: #fff;
+}
+
+.brand strong { display: block; font-size: 15px; font-weight: 700; color: var(--text-main); }
+.brand span   { display: block; margin-top: 2px; font-size: 10px; color: var(--text-muted); }
+
+/* ── Card ──────────────────────────────────── */
+.card {
+  width: 100%;
+  padding: 28px 30px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  background: var(--bg-surface);
+  box-shadow: var(--shadow-hover);
+}
+
+.cardHeader { display: flex; align-items: flex-start; gap: 13px; }
+
+.securityIcon {
+  width: 38px; height: 38px;
+  flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: var(--radius-sm);
+  background: var(--brand-50);
+  color: var(--brand-600);
+}
+
+.cardHeader h1 { font-size: 20px; font-weight: 700; letter-spacing: -.02em; }
+.cardHeader p  { margin-top: 4px; font-size: 12px; line-height: 1.5; color: var(--text-muted); }
+
+/* ── Form ──────────────────────────────────── */
+.form { margin-top: 24px; }
+.field + .field { margin-top: 18px; }
+
+.field label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 12px; font-weight: 600;
+  color: var(--text-main);
+}
+
+.labelRow { display: flex; justify-content: space-between; }
+.labelRow a { font-size: 11px; font-weight: 600; color: var(--brand-600); }
+.labelRow a:hover { text-decoration: underline; }
+
+.inputWrapper {
+  height: 42px;
+  display: flex; align-items: center; gap: 9px;
+  padding: 0 12px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  background: var(--bg-surface);
+  color: var(--text-muted);
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.inputWrapper:focus-within {
+  border-color: var(--brand-500);
+  box-shadow: var(--shadow-focus);
+}
+
+.inputWrapper input {
+  width: 100%; border: none; outline: none;
+  background: transparent;
+  font: inherit; font-size: 13px;
+  color: var(--text-main);
+}
+.inputWrapper input::placeholder { color: var(--text-subtle); }
+
+.passwordButton {
+  display: flex; align-items: center; justify-content: center;
+  border: none; background: transparent;
+  color: var(--text-muted); cursor: pointer;
+  transition: color var(--transition-fast);
+}
+.passwordButton:hover { color: var(--text-main); }
+
+/* ── Error ─────────────────────────────────── */
+.error {
+  margin-top: 14px;
+  padding: 10px 12px;
+  border: 1px solid var(--badge-rose-border);
+  border-radius: var(--radius-md);
+  background: var(--badge-rose-bg);
+  font-size: 12px;
+  color: var(--badge-rose-text);
+}
+
+/* ── Submit ────────────────────────────────── */
+.submitButton {
+  width: 100%; height: 42px;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  margin-top: 22px;
+  border: none;
+  border-radius: var(--radius-full);
+  background: var(--brand-600);
+  color: #fff;
+  font: inherit; font-size: 13px; font-weight: 600;
+  cursor: pointer;
+  transition: background var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+.submitButton:hover:not(:disabled) {
+  background: var(--brand-700);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-card);
+}
+.submitButton:disabled { cursor: not-allowed; opacity: 0.6; }
+
+/* ── Demo notice ───────────────────────────── */
+.demoNotice {
+  display: flex; flex-direction: column; gap: 3px;
+  margin-top: 20px; padding: 12px 14px;
+  border: 1px solid var(--brand-100);
+  border-radius: var(--radius-md);
+  background: var(--brand-50);
+}
+.demoNotice strong { font-size: 11px; color: var(--brand-600); font-weight: 700; }
+.demoNotice span   { font-size: 11px; line-height: 1.5; color: var(--text-muted); }
+
+/* ── Footer ────────────────────────────────── */
+.footerText { margin-top: 20px; font-size: 10px; color: var(--text-subtle); text-align: center; }
+
+@media (max-width: 480px) {
+  .page { padding: 24px 14px; }
+  .card { padding: 22px 18px; }
+}

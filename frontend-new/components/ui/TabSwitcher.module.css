@@ -1,0 +1,38 @@
+/* ── Tab container ─────────────────────────────── */
+.tabContainer {
+  display: inline-flex;
+  align-items: center;
+  background: var(--bg-subtle);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 3px;
+  gap: 2px;
+}
+
+.tabButton {
+  padding: 6px 14px;
+  border-radius: calc(var(--radius-md) - 2px);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-muted);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+}
+
+.tabButton:hover {
+  color: var(--text-main);
+  background: rgba(255,255,255,.6);
+}
+
+.tabButton.active {
+  background: var(--bg-surface);
+  color: var(--brand-600);
+  font-weight: 600;
+  box-shadow: var(--shadow-sm);
+}

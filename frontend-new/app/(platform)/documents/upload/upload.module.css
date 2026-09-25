@@ -1,0 +1,313 @@
+.page {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 28px 24px 64px;
+}
+
+.backLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-muted);
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  margin-bottom: 20px;
+  transition: color var(--transition-fast);
+}
+
+.backLink:hover {
+  color: var(--brand-600);
+}
+
+.header {
+  margin-bottom: 24px;
+}
+
+
+
+.header h1 {
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--text-main);
+  margin: 0 0 8px;
+  letter-spacing: -0.02em;
+}
+
+.header p {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin: 0;
+  max-width: 680px;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Main Layout & Cards                                                        */
+/* -------------------------------------------------------------------------- */
+.grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 24px;
+}
+@media (max-width: 900px) { .grid { grid-template-columns: 1fr; } }
+
+.card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  box-shadow: var(--shadow-sm);
+}
+
+.cardTitle {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--text-main);
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.formGroup label { font-size: 12px; font-weight: 600; color: var(--text-main); }
+
+.selectInput, .textInput {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  background: var(--bg-surface);
+  color: var(--text-main);
+  font: inherit;
+  font-size: 13px;
+  transition: all var(--transition-fast);
+}
+
+.selectInput:focus, .textInput:focus {
+  outline: none;
+  border-color: var(--brand-500);
+  box-shadow: var(--shadow-focus);
+}
+
+.fieldset {
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  background: var(--bg-subtle);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.fieldset legend { font-size: 10px; font-weight: 700; color: var(--text-muted); padding: 0 6px; text-transform: uppercase; }
+
+/* -------------------------------------------------------------------------- */
+/* Dropzone & Selected Files                                                  */
+/* -------------------------------------------------------------------------- */
+.dropZone {
+  border: 2px dashed var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 28px;
+  text-align: center;
+  background: var(--bg-surface);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+.dropZone:hover { border-color: var(--brand-500); background: var(--bg-subtle); }
+
+.dropIcon {
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  background: var(--brand-50);
+  color: var(--brand-600);
+  display: flex; align-items: center; justify-content: center;
+}
+
+.dropText { font-size: 13px; color: var(--text-main); font-weight: 600; }
+.dropSub { font-size: 11px; color: var(--text-muted); }
+.hiddenFileInput { display: none; }
+
+.fileSelectionHeader { display: flex; align-items: center; justify-content: space-between; margin-top: 4px; }
+.fileSelectionHeader strong { font-size: 13px; font-weight: 700; color: var(--text-main); }
+.fileList { display: flex; flex-direction: column; gap: 8px; }
+
+.fileItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  transition: all var(--transition-fast);
+}
+.fileItem:hover { border-color: var(--border-light); box-shadow: var(--shadow-sm); }
+.fileItemLeft { display: flex; align-items: center; gap: 10px; }
+.fileCheckIcon { color: var(--badge-emerald-text); }
+.fileName { font-size: 12px; font-weight: 600; color: var(--text-main); }
+.fileSize { font-size: 11px; color: var(--text-muted); font-weight: 500; }
+
+.fileActionsRow { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-top: 8px; }
+
+.btnGroup { display: flex; align-items: center; gap: 8px; }
+
+.btnSecondary {
+  padding: 9px 16px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-surface);
+  color: var(--text-muted);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+.btnSecondary:hover { background: var(--bg-subtle); color: var(--text-main); }
+
+.btnPrimary {
+  padding: 9px 20px;
+  border-radius: var(--radius-sm);
+  border: none;
+  background: var(--brand-600);
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all var(--transition-fast);
+}
+.btnPrimary:hover { background: var(--brand-700); }
+.btnPrimary:disabled { opacity: 0.6; cursor: not-allowed; }
+
+/* -------------------------------------------------------------------------- */
+/* Progress Panel & Staggered Reveal Animation                                */
+/* -------------------------------------------------------------------------- */
+.progressPanel {
+  background: var(--bg-subtle);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.progressHeader { display: flex; align-items: center; justify-content: space-between; }
+.progressTitleGroup { display: flex; align-items: center; gap: 10px; }
+.progressTitleGroup h3 { font-size: 15px; font-weight: 700; color: var(--text-main); margin: 0; }
+
+.overallBadge {
+  font-size: 12px; font-weight: 700;
+  color: var(--brand-600); background: var(--brand-50);
+  padding: 4px 10px; border-radius: var(--radius-full);
+}
+
+.progressBarTrack { width: 100%; height: 8px; background: var(--border-subtle); border-radius: var(--radius-full); overflow: hidden; }
+.progressBarFill { height: 100%; background: var(--brand-gradient); border-radius: var(--radius-full); transition: width 400ms cubic-bezier(0.16, 1, 0.3, 1); }
+
+/* Staggered Pipeline Checklist */
+.pipelineList { display: flex; flex-direction: column; gap: 8px; }
+
+.pipelineItem {
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 14px; border-radius: var(--radius-md);
+  background: var(--bg-surface); border: 1px solid var(--border-subtle);
+  font-size: 12px; font-weight: 600; color: var(--text-main);
+  animation: fadeUpReveal 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes fadeUpReveal {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.statusIconWrapper { width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.iconDone { color: var(--badge-emerald-text); }
+.iconActive { color: var(--brand-600); animation: spinDot 1.2s linear infinite; }
+@keyframes spinDot { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+.iconPending { color: var(--text-subtle); }
+.stepTextCompleted { color: var(--text-main); font-weight: 700; }
+.stepTextActive { color: var(--brand-600); font-weight: 700; }
+.stepTextPending { color: var(--text-muted); }
+
+/* -------------------------------------------------------------------------- */
+/* Document Processing Status Table                                           */
+/* -------------------------------------------------------------------------- */
+.tableCard {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  box-shadow: var(--shadow-sm);
+}
+
+.tableHeader { display: flex; align-items: center; justify-content: space-between; }
+.tableHeader h2 { font-size: 16px; font-weight: 700; color: var(--text-main); margin: 0; }
+.tableHeader p { font-size: 11px; color: var(--text-muted); margin: 2px 0 0; }
+.tableWrapper { overflow-x: auto; }
+
+.procTable { width: 100%; border-collapse: collapse; text-align: left; font-size: 12px; }
+.procTable th {
+  padding: 12px 14px; font-size: 10px; font-weight: 700; color: var(--text-subtle);
+  text-transform: uppercase; letter-spacing: 0.05em; background: var(--bg-subtle);
+  border-bottom: 1px solid var(--border-subtle);
+}
+.procTable td { padding: 14px; border-bottom: 1px solid var(--border-light); color: var(--text-muted); vertical-align: middle; }
+
+.docNameCell { display: flex; align-items: center; gap: 10px; font-weight: 600; color: var(--text-main); }
+.docIcon { color: var(--brand-600); }
+
+/* Stage status badges in table */
+.stageBadge { display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 50%; font-size: 11px; }
+.stageDone { background: var(--badge-emerald-bg); color: var(--badge-emerald-text); }
+.stageActive { background: var(--brand-50); color: var(--brand-600); animation: pulseDot 1.5s infinite; }
+.stagePending { color: var(--text-subtle); }
+.stageDash { color: var(--text-muted); font-weight: 700; }
+
+/* Overall Document Status Badges */
+.statusBadge {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 3px 10px; border-radius: var(--radius-full);
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 0.03em; text-transform: uppercase;
+}
+.statusProcessing { background: var(--brand-50); color: var(--brand-600); border: 1px solid var(--brand-100); }
+.statusCompleted { background: var(--badge-emerald-bg); color: var(--badge-emerald-text); border: 1px solid var(--badge-emerald-border); }
+.statusWarning { background: var(--badge-amber-bg); color: var(--badge-amber-text); border: 1px solid var(--badge-amber-border); }
+.statusFailed { background: var(--badge-rose-bg); color: var(--badge-rose-text); border: 1px solid var(--badge-rose-border); }
+
+/* -------------------------------------------------------------------------- */
+/* Status Types Legend & Success Toast                                        */
+/* -------------------------------------------------------------------------- */
+.legendRow {
+  display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+  padding: 12px 16px; background: var(--bg-subtle);
+  border-radius: var(--radius-sm); border: 1px solid var(--border-subtle);
+  font-size: 11px; color: var(--text-muted);
+}
+.legendTitle { font-weight: 700; color: var(--text-main); }
+
+.completeBanner {
+  background: var(--badge-emerald-bg); border: 1px solid var(--badge-emerald-border);
+  border-radius: var(--radius-md); padding: 14px 18px;
+  display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-top: 16px;
+}
+.completeText { display: flex; align-items: center; gap: 10px; color: var(--badge-emerald-text); font-size: 12px; font-weight: 600; }
+.completeActions { display: flex; align-items: center; gap: 10px; }

@@ -1,0 +1,219 @@
+.page { width: 100%; max-width: 1500px; margin: 0 auto; padding: 24px 28px 60px; }
+
+/* ── State ───────────────────────────────────── */
+.state {
+  min-height: 60vh; display: flex; align-items: center; justify-content: center;
+  gap: 10px; color: var(--text-muted);
+  flex-direction: column;
+}
+.state button {
+  border: 1px solid var(--border-subtle); background: var(--bg-surface);
+  color: var(--text-main); border-radius: var(--radius-full);
+  padding: 7px 14px; cursor: pointer; font-size: 12px; font-weight: 600;
+  transition: all var(--transition-fast);
+}
+.state button:hover { background: var(--brand-50); border-color: var(--brand-100); color: var(--brand-600); }
+
+/* ── Back ────────────────────────────────────── */
+.backButton {
+  display: inline-flex; align-items: center; gap: 7px;
+  border: 0; background: transparent; color: var(--text-muted);
+  padding: 0; margin-bottom: 22px; cursor: pointer; font-size: 12px;
+  transition: color var(--transition-fast);
+}
+.backButton:hover { color: var(--text-main); }
+
+/* ── Header ──────────────────────────────────── */
+.header { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; margin-bottom: 22px; }
+
+
+
+.titleRow { display: flex; align-items: center; gap: 10px; }
+.titleRow h1 { margin: 0; font-size: 22px; font-weight: 700; line-height: 1.15; color: var(--text-main); letter-spacing: -.01em; }
+
+.parcelBadge {
+  padding: 4px 10px; border: 1px solid var(--border-subtle); border-radius: var(--radius-full);
+  font-size: 11px; font-weight: 600; color: var(--brand-600); background: var(--brand-50);
+}
+
+.header p { margin: 6px 0 0; font-size: 12px; color: var(--text-muted); }
+
+.currentOwner {
+  min-width: 200px; padding: 14px 16px;
+  border: 1px solid var(--border-subtle); border-radius: var(--radius-md);
+  background: var(--bg-surface); box-shadow: var(--shadow-sm);
+}
+.currentOwner span { display: block; font-size: 9px; font-weight: 700; color: var(--text-subtle); text-transform: uppercase; letter-spacing: .08em; }
+.currentOwner strong { display: block; margin-top: 4px; font-size: 14px; font-weight: 700; color: var(--text-main); }
+.currentOwner small  { display: block; margin-top: 2px; font-size: 10px; color: var(--text-muted); }
+
+/* ── Summary ─────────────────────────────────── */
+.summaryGrid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 18px; }
+
+
+
+/* ── Position Card ───────────────────────────── */
+.positionCard {
+  display: flex; align-items: center; gap: 14px;
+  margin-bottom: 18px; padding: 16px 18px;
+  border: 1px solid var(--border-subtle); border-radius: var(--radius-md);
+  background: var(--bg-surface); box-shadow: var(--shadow-sm);
+}
+.positionIcon {
+  width: 38px; height: 38px; flex: 0 0 38px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: var(--radius-sm); background: var(--brand-50); color: var(--brand-600);
+}
+.positionContent { flex: 1; }
+
+.positionContent h2 { margin: 3px 0; font-size: 14px; font-weight: 600; color: var(--text-main); }
+.positionContent p  { margin: 0; font-size: 11px; color: var(--text-muted); }
+.positionDate { text-align: right; }
+.positionDate span   { display: block; font-size: 10px; color: var(--text-subtle); }
+.positionDate strong { display: block; margin-top: 3px; font-size: 12px; color: var(--text-main); font-weight: 600; }
+
+/* ── Card ────────────────────────────────────── */
+.card {
+  margin-bottom: 18px; padding: 18px;
+  border: 1px solid var(--border-subtle); border-radius: var(--radius-md);
+  background: var(--bg-surface); box-shadow: var(--shadow-sm);
+}
+.cardHeader {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  gap: 18px; padding-bottom: 14px; border-bottom: 1px solid var(--border-light);
+}
+.cardHeader h2   { margin: 0; font-size: 14px; font-weight: 700; color: var(--text-main); }
+.cardHeader p    { margin: 4px 0 0; font-size: 11px; color: var(--text-muted); }
+.cardHeader > svg{ color: var(--text-subtle); }
+
+/* ── Timeline ─────────────────────────────────── */
+.timeline { padding-top: 16px; }
+
+.timelineEvent { display: grid; grid-template-columns: 40px 1fr; min-height: 130px; }
+
+.timelineRail { position: relative; display: flex; justify-content: center; }
+
+.timelineDot {
+  position: relative; z-index: 2;
+  width: 30px; height: 30px;
+  display: flex; align-items: center; justify-content: center;
+  margin-top: 2px;
+  border: 1px solid var(--border-subtle); border-radius: 50%;
+  background: var(--bg-surface); color: var(--text-muted);
+}
+
+.dotownership   { color: var(--badge-emerald-text); }
+.dottransaction { color: var(--badge-amber-text); }
+.dotmutation    { color: var(--text-muted); }
+.dotdocument    { color: var(--text-subtle); }
+
+.timelineLine {
+  position: absolute; top: 32px; bottom: 0;
+  width: 1px; background: var(--border-subtle);
+}
+
+.eventContent { margin-left: 8px; padding: 0 0 26px 16px; border-bottom: 1px solid var(--border-light); }
+.timelineEvent:last-child .eventContent { border-bottom: 0; }
+
+.eventTop { display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; }
+
+.eventDate { display: block; margin-bottom: 3px; font-size: 10px; font-weight: 600; color: var(--text-subtle); }
+.eventTop h3 { margin: 0; font-size: 14px; font-weight: 600; color: var(--text-main); }
+
+.eventDescription { max-width: 800px; margin: 6px 0 10px; font-size: 12px; line-height: 1.6; color: var(--text-muted); }
+
+.latestEvent .eventTop h3 { font-weight: 700; }
+
+/* ── Category Badge ──────────────────────────── */
+.categoryBadge {
+  flex-shrink: 0; padding: 3px 8px;
+  border-radius: var(--radius-full); font-size: 9px; font-weight: 700;
+  letter-spacing: .04em; text-transform: uppercase;
+  background: var(--bg-subtle); color: var(--text-muted);
+  border: 1px solid var(--border-subtle);
+}
+.categoryownership   { background: var(--badge-emerald-bg); color: var(--badge-emerald-text); border-color: var(--badge-emerald-border); }
+.categorytransaction { background: var(--badge-amber-bg);   color: var(--badge-amber-text);   border-color: var(--badge-amber-border);   }
+.categorymutation    { background: var(--bg-subtle);        color: var(--text-muted);         border-color: var(--border-subtle);        }
+.categorydocument    { background: var(--brand-50);         color: var(--brand-600);          border-color: var(--brand-100);            }
+
+/* ── Owner Transfer ──────────────────────────── */
+.ownerTransfer { display: flex; align-items: center; gap: 9px; max-width: 640px; margin-bottom: 10px; }
+
+.ownerBox {
+  min-width: 160px; padding: 8px 11px;
+  border: 1px solid var(--border-subtle); border-radius: var(--radius-sm);
+  background: var(--bg-subtle);
+}
+.ownerBox span   { display: block; font-size: 9px; color: var(--text-subtle); text-transform: uppercase; letter-spacing: .04em; }
+.ownerBox strong { display: block; margin-top: 2px; font-size: 12px; color: var(--text-main); font-weight: 600; }
+
+.transferArrow { color: var(--text-subtle); }
+
+/* ── Event Meta ──────────────────────────────── */
+.eventMeta { display: flex; align-items: center; flex-wrap: wrap; gap: 12px; }
+.eventMeta span   { font-size: 10px; color: var(--text-subtle); }
+.eventMeta strong { margin-left: 3px; color: var(--text-muted); }
+
+.documentLink {
+  display: inline-flex; align-items: center; gap: 5px;
+  border: 0; background: transparent; padding: 0;
+  color: var(--text-muted); font-size: 10px; cursor: pointer;
+  transition: color var(--transition-fast);
+}
+.documentLink:hover { color: var(--text-main); text-decoration: underline; }
+
+/* ── Flow ────────────────────────────────────── */
+.flow { display: flex; align-items: center; overflow-x: auto; padding: 20px 4px 8px; }
+.flowItem { display: flex; align-items: center; flex-shrink: 0; }
+
+.flowNode {
+  position: relative; min-width: 140px;
+  display: flex; align-items: center; gap: 8px; padding: 10px 12px;
+  border: 1px solid var(--border-subtle); border-radius: var(--radius-md);
+  background: var(--bg-subtle); color: var(--text-muted);
+}
+.flowNode strong { font-size: 12px; color: var(--text-main); }
+.flowNode span {
+  position: absolute; top: -7px; right: 8px;
+  padding: 2px 5px; border-radius: var(--radius-sm);
+  background: var(--bg-surface); border: 1px solid var(--border-subtle);
+  font-size: 8px; font-weight: 700; color: var(--badge-emerald-text); text-transform: uppercase;
+}
+
+.flowArrow { display: flex; align-items: center; justify-content: center; width: 44px; color: var(--text-subtle); }
+
+/* ── Note ────────────────────────────────────── */
+.note {
+  display: flex; align-items: flex-start; gap: 10px; padding: 13px 15px;
+  border: 1px solid var(--border-subtle); border-radius: var(--radius-md);
+  background: var(--bg-subtle); color: var(--text-muted);
+}
+.note > svg { flex: 0 0 auto; margin-top: 2px; }
+.note strong { display: block; font-size: 11px; color: var(--text-main); }
+.note p { max-width: 900px; margin: 3px 0 0; font-size: 11px; line-height: 1.6; }
+
+/* ── Empty ───────────────────────────────────── */
+.empty { padding: 32px 10px; text-align: center; font-size: 12px; color: var(--text-subtle); }
+
+/* ── Responsive ──────────────────────────────── */
+@media (max-width: 1000px) { .summaryGrid { grid-template-columns: repeat(2, 1fr); } }
+
+@media (max-width: 700px) {
+  .page { padding: 18px 14px 44px; }
+  .header { align-items: flex-start; flex-direction: column; }
+  .currentOwner { width: 100%; }
+  .positionCard { align-items: flex-start; flex-wrap: wrap; }
+  .positionDate { width: 100%; text-align: left; padding-left: 52px; }
+  .eventTop { align-items: flex-start; flex-direction: column; }
+  .ownerTransfer { align-items: stretch; flex-direction: column; }
+  .ownerBox { width: 100%; }
+  .transferArrow { transform: rotate(90deg); align-self: center; }
+}
+@media (max-width: 450px) {
+  .summaryGrid { grid-template-columns: 1fr; }
+  .timelineEvent { grid-template-columns: 32px 1fr; }
+  .eventContent  { padding-left: 10px; }
+  .timelineDot   { width: 26px; height: 26px; }
+  .timelineLine  { top: 28px; }
+}
