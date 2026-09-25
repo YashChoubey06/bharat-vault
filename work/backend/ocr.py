@@ -4,6 +4,7 @@ import io
 import os
 import shutil
 import subprocess
+import tempfile
 from pathlib import Path
 
 import pymupdf
@@ -51,8 +52,8 @@ def validate(content):
         return image.format.lower(), count
 
 
-def recognize(path, language, page):
-    command = [executable(), str(path), 'stdout', '-l', language, '--psm', '6', 'tsv']
+def _recognize(path, language, page, mode=6):
+    command = [executable(), str(path), 'stdout', '-l', language, '--psm', str(mode), 'tsv']
     result = subprocess.run(command, capture_output=True, encoding='utf-8', errors='replace', timeout=90)
     if result.returncode:
         raise RuntimeError('Tesseract failed. Check the configured executable and English/Hindi language models.')
@@ -73,6 +74,32 @@ def recognize(path, language, page):
         lines.append(dict(text=' '.join(w['text'] for w in words), confidence=sum(max(0, float(w['conf'])) for w in words) / len(words) / 100,
             bbox=[left, top, right, bottom], page=page, pageWidth=width, pageHeight=height,
             method='mean Tesseract word confidence (not calibrated accuracy)', modelVersion='tesseract-5-label-rules-v1'))
+    return lines
+
+
+def recognize(path, language, page):
+    with Image.open(path) as source:
+        width, height = source.size
+        # Small phone downloads need larger glyphs. Keep the preview unchanged:
+        # all recognized regions are mapped back to its original pixel frame.
+        if max(width, height) >= 1500:
+            return _recognize(path, language, page)
+        scale = min(3, 1500 / max(width, height))
+        resized = source.resize((round(width * scale), round(height * scale)), Image.Resampling.LANCZOS)
+    with tempfile.TemporaryDirectory(prefix='bharat-ocr-') as temporary:
+        enlarged = Path(temporary) / 'enlarged.png'
+        resized.save(enlarged)
+        # Sparse layout keeps stamps and marginal notes out of body-text lines.
+        lines = _recognize(enlarged, language, page, mode=11)
+        if not lines:
+            lines = _recognize(enlarged, language, page, mode=6)
+    sx, sy = resized.width / width, resized.height / height
+    for line in lines:
+        left, top, right, bottom = line['bbox']
+        line.update(bbox=[max(0, int(left / sx)), max(0, int(top / sy)),
+                          min(width, int(right / sx + .999)), min(height, int(bottom / sy + .999))],
+                    pageWidth=width, pageHeight=height,
+                    modelVersion='tesseract-5-small-scan-v2')
     return lines
 
 

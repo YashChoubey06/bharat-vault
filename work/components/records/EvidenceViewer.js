@@ -199,7 +199,7 @@ export default function EvidenceViewer({ parcel }) {
 
           <div className={styles.fieldList}>
             {fieldsForDocument.length === 0 ? (
-              <EmptyFields />
+              <EmptyFields document={selectedDocument} />
             ) : (
               fieldsForDocument.map((field) => (
                 <FieldCard
@@ -614,12 +614,13 @@ function Detail({ label, value }) {
   );
 }
 
-function EmptyFields() {
+function EmptyFields({ document }) {
   return (
     <div className={styles.emptyFields}>
       <Clock3 size={18} />
       <strong>No extracted fields</strong>
-      <span>OCR fields will appear after document processing completes.</span>
+      <span>Open the document details to check processing and read recognized text. Finished documents may need manual field mapping.</span>
+      <Link href={`/documents/${document.id}`}>Read OCR text / retry processing</Link>
     </div>
   );
 }

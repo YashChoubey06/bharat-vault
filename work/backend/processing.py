@@ -34,7 +34,7 @@ def run_one():
                 current['processedPages'] = page
                 db.save_document(con, current)
         lines = ocr.process(doc, progress)
-        if doc['documentType'] == 'Auto detect':
+        if doc['documentType'] in ('Auto detect', 'Unknown — Manual Review Required'):
             doc['documentType'] = classify('\n'.join(line['text'] for line in lines))
         fields = extract(lines, doc)
         with db.transaction() as con:

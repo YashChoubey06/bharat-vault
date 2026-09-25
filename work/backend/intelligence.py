@@ -90,7 +90,7 @@ def extract(lines, doc):
 
 
 def classify(text):
-    for kind, expression in [('Mutation Record', 'mutation|नामांतरण'), ('Registration Deed', 'sale deed|registration deed|विक्रय'), ('GIS Extract', 'cadastral|gis area'), ('Current RoR', 'record of rights|jamabandi|जमाबंदी')]:
+    for kind, expression in [('Mutation Record', 'mutation|नामांतरण'), ('Registration Deed', 'sale deed|registration deed|deed of gift|gift deed|विक्रय'), ('GIS Extract', 'cadastral|gis area'), ('Current RoR', 'record of rights|jamabandi|जमाबंदी')]:
         if re.search(expression, text, re.I):
             return kind
     return 'Unknown — Manual Review Required'

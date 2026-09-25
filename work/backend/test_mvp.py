@@ -164,6 +164,12 @@ class LocalMVPTest(unittest.TestCase):
         self.assertEqual(result['ocrStatus'],'REVIEW_REQUIRED')
         self.assertEqual(result['extractions'],[])
         self.assertEqual(result['confidence'],0)
+        self.assertEqual(self.client.post('/api/v1/documents/'+upload['id']+'/process').status_code,200)
+        for _ in range(120):
+            result=self.client.get('/api/v1/documents/'+upload['id']).json()
+            if result['ocrStatus'] not in ('QUEUED','PROCESSING'): break
+            time.sleep(.1)
+        self.assertEqual(result['ocrStatus'],'REVIEW_REQUIRED')
         self.assertEqual(self.client.post('/api/v1/verification/CASE-PRC-004/decision',json={'decision':'VERIFIED','notes':'Cannot approve blank evidence'}).status_code,409)
 
     def test_scope_manual_mapping_and_rate_limit(self):
@@ -176,6 +182,7 @@ class LocalMVPTest(unittest.TestCase):
         self.assertEqual(mapped.status_code,201,mapped.text)
         self.assertEqual(mapped.json()['reviewStatus'],'PENDING')
         self.assertEqual(mapped.json()['originalValue'],details['ocrLines'][index]['text'])
+        self.assertEqual(self.client.post('/api/v1/documents/'+doc['id']+'/process').status_code,409)
         self.assertEqual(self.client.post('/api/v1/documents/'+doc['id']+'/fields',json=body).status_code,409)
         with db.transaction() as con:
             outside=db.get(con,'parcel','PRC-004')

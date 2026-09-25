@@ -310,8 +310,8 @@ def retry(key: str,user=User):
     auth.require_role(user,auth.UPLOADERS)
     with db.transaction() as con:
         doc=doc_for(con,key,user)
-        if doc['ocrStatus']!='FAILED':
-            raise HTTPException(409,'Only failed jobs may be retried. Upload a new source version to replace completed evidence.')
+        if doc['ocrStatus'] not in ('FAILED', 'REVIEW_REQUIRED') or db.fields(con,document_id=key):
+            raise HTTPException(409,'Retry is available for failed or review-required documents without extracted or manually mapped fields. Upload a new source version to replace completed evidence.')
         return processing.enqueue(con,doc,user['id'])
 
 

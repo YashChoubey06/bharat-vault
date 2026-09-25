@@ -306,10 +306,10 @@ export default function DocumentDetailPage() {
       <div className={styles.card} style={{padding:16}}>
         <p role="status">Local processing: {document.ocrStatus} · {document.processedPages || 0} / {document.pages} pages</p>
         {document.error && <p role="alert">{document.error}</p>}
-        {document.ocrStatus === "FAILED" && <button onClick={async()=>{try {await retryDocument(documentId);setDocument(await getDocumentById(documentId));} catch(err){setError(err.message);}}}>Retry local OCR</button>}
+        {["FAILED", "REVIEW_REQUIRED"].includes(document.ocrStatus) && !extractions.length && <button onClick={async()=>{try {await retryDocument(documentId);setDocument(await getDocumentById(documentId));} catch(err){setError(err.message);}}}>Retry local OCR</button>}
         <Link href={`/records/${document.parcelId}/evidence`}>Open Evidence Viewer →</Link>
-        {document.ocrStatus === "REVIEW_REQUIRED" && <p>No supported label-based fields were detected. Inspect the original and raw OCR text; upload a clearer source if needed.</p>}
-        {document.rawText && <details><summary>Raw OCR text</summary><pre style={{whiteSpace:"pre-wrap"}}>{document.rawText}</pre></details>}
+        {document.ocrStatus === "REVIEW_REQUIRED" && <p>{document.rawText?.trim() ? "Text was recognized, but automatic field extraction needs manual review. Read the text below or map a field to its source line." : "OCR finished without readable text. Try a clearer, higher-resolution scan."}</p>}
+        {document.rawText && <details open={document.ocrStatus === "REVIEW_REQUIRED"}><summary>Recognized text (OCR)</summary><pre style={{whiteSpace:"pre-wrap"}}>{document.rawText}</pre></details>}
         <ManualFieldMapping document={document} onSaved={async()=>setDocument(await getDocumentById(documentId))}/>
       </div>
       <section className={styles.summaryGrid}>
